@@ -1,6 +1,6 @@
 package com.bossoh.gmsscbackend.services.impl;
 import com.bossoh.gmsscbackend.Validator.PieceEquipementValidator;
-import com.bossoh.gmsscbackend.defaultData.UtilRandom;
+import com.bossoh.gmsscbackend.utils.UtilRandom;
 import com.bossoh.gmsscbackend.entities.*;
 import com.bossoh.gmsscbackend.repositories.*;
 import com.bossoh.gmsscbackend.services.GssmcInit;

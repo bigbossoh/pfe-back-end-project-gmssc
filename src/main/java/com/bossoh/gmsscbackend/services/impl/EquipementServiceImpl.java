@@ -1,7 +1,7 @@
 package com.bossoh.gmsscbackend.services.impl;
 
 import com.bossoh.gmsscbackend.Validator.EquipementValidor;
-import com.bossoh.gmsscbackend.defaultData.UtilRandom;
+import com.bossoh.gmsscbackend.utils.UtilRandom;
 import com.bossoh.gmsscbackend.entities.Equipement;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
