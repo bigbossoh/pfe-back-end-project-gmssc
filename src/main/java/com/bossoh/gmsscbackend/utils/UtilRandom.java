@@ -1,4 +1,4 @@
-package com.bossoh.gmsscbackend.defaultData;
+package com.bossoh.gmsscbackend.utils;
 
 import java.security.SecureRandom;
 import java.util.Random;

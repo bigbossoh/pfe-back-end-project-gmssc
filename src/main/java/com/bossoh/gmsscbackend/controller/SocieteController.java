@@ -2,8 +2,10 @@ package com.bossoh.gmsscbackend.controller;
 import java.util.List;
 
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,36 +17,43 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bossoh.gmsscbackend.entities.Societe;
 import com.bossoh.gmsscbackend.services.SocieteService;
 
+import static com.bossoh.gmsscbackend.utils.Constants.APP_ROOT;
+
 @RestController
-@RequestMapping(path="/api/v1/societe")
 @RequiredArgsConstructor
+@Api(APP_ROOT+"/societes")
 public class SocieteController {
 	
 	private final SocieteService societeService;
 
-	@GetMapping("/all")
+	@GetMapping(value=APP_ROOT+"/societes/all",produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Societe> getListeDesSocietes() {
 
 		return societeService.listOfSocietes();
 	}
-	@GetMapping(path = "{IdSociete}")
+
+	@GetMapping(value=APP_ROOT+"/societes/{IdSociete}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public Societe getSocieteByID(@PathVariable("IdSociete") Long IdSociete) {
 		return societeService.getSocieteById(IdSociete);
 	}
-	@PostMapping(path = "/savesociete")
+	@PutMapping(value =APP_ROOT+"/societes/update",
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public Societe updatingSociete(@RequestBody Societe soc)
+	{
+		return societeService.updateSociete(soc);
+	}
+	@PostMapping(value =APP_ROOT+"/societes/savesociete",
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Societe saveSociete(@RequestBody  Societe soc) {
 		
 		return societeService.saveSociete(soc);
 	}
-	@DeleteMapping(path = "/delete/{idSociete}")
+	@DeleteMapping(value = APP_ROOT+"/societes/delete/{idSociete}",
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean deleteSocieteById(@PathVariable("idSociete") Long idSociete) {
 		return societeService.deleteSociete(idSociete);
-	}
-	@PutMapping(path="/update")
-	public Societe updatingSociete(@RequestBody Societe soc)
-
-	{		
-		return societeService.updateSociete(soc);
 	}
 
 }

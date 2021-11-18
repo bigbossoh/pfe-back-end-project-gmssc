@@ -1,9 +1,7 @@
 package com.bossoh.gmsscbackend.services.impl;
 
-import com.bossoh.gmsscbackend.Validator.BienImmobilierValidator;
 import com.bossoh.gmsscbackend.Validator.PieceEquipementValidator;
-import com.bossoh.gmsscbackend.defaultData.UtilRandom;
-import com.bossoh.gmsscbackend.entities.BienImmobilier;
+import com.bossoh.gmsscbackend.utils.UtilRandom;
 import com.bossoh.gmsscbackend.entities.Equipement;
 import com.bossoh.gmsscbackend.entities.PieceEquipement;
 import com.bossoh.gmsscbackend.entities.Pieces;
