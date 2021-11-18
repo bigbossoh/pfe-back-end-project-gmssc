@@ -2,39 +2,50 @@ package com.bossoh.gmsscbackend.controller;
 
 import com.bossoh.gmsscbackend.entities.Equipement;
 import com.bossoh.gmsscbackend.services.impl.EquipementServiceImpl;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.bossoh.gmsscbackend.utils.Constants.APP_ROOT;
+
 @RestController
-@RequestMapping(path="/api/v1/equipement")
+@Api(APP_ROOT+"/equipements")
 @RequiredArgsConstructor
 public class EquipementController {
     private final EquipementServiceImpl equipementService;
 
-    @GetMapping("/all")
+
+    @GetMapping(value=APP_ROOT+"/equipements/all",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Equipement> getListeDesEquipements() {
         return equipementService.listOfEquipement();
     }
-    @GetMapping(path = "{IdEquipement}")
+    @GetMapping(value=APP_ROOT+"/equipements/{IdEquipement}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Equipement getEquipementByID(@PathVariable("IdEquipement") Long IdEquipement) {
         return equipementService.getEquipementyId(IdEquipement);
     }
-    @GetMapping(path = "/getPiece/{CodeEquipement}")
+    @GetMapping(value=APP_ROOT+"/equipements/getPiece/{CodeEquipement}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Equipement getPieceByID(@PathVariable("CodeEquipement") String CodeEquipement) {
         return equipementService.getEquipementByCode(CodeEquipement);
     }
-    @PostMapping(path = "/saveEquipement")
+    @PostMapping(value =APP_ROOT+"/equipements/saveEquipement",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public Equipement savePiece(@RequestBody Equipement equipement) {
 
         return equipementService.saveEquipement(equipement);
     }
-    @DeleteMapping(path = "/delete/{idEquipement}")
+
+    @DeleteMapping(value = APP_ROOT+"/equipements/delete/{idEquipement}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean deleteEquipementById(@PathVariable("idEquipement") Long idEquipement) {
         return equipementService.deleteEquipement(idEquipement);
     }
-    @PutMapping(path="/update")
+    @PutMapping(value =APP_ROOT+"/equipements/update",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public Equipement updatingSociete(@RequestBody Equipement equipement) {
         return equipementService.updateEquipement(equipement);
     }

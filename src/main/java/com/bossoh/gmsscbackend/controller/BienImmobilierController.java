@@ -46,7 +46,7 @@ public class BienImmobilierController {
         return bienImmobilierImpl.deleteBienImmobilier(IdBien);
     }
 
-    @PostMapping(value =APP_ROOT+"/biens/update",
+    @PutMapping(value =APP_ROOT+"/biens/update",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public BienImmobilier updatingBienImmobilier(@RequestBody BienImmobilier bien){
