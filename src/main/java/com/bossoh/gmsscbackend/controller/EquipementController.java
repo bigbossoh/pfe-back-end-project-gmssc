@@ -24,7 +24,7 @@ public class EquipementController {
     }
     @GetMapping(value=APP_ROOT+"/equipements/{IdEquipement}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Equipement getEquipementByID(@PathVariable("IdEquipement") Long IdEquipement) {
-        return equipementService.getEquipementyId(IdEquipement);
+        return equipementService.getEquipementById(IdEquipement);
     }
     @GetMapping(value=APP_ROOT+"/equipements/getPiece/{CodeEquipement}",produces = MediaType.APPLICATION_JSON_VALUE)
     public Equipement getPieceByID(@PathVariable("CodeEquipement") String CodeEquipement) {

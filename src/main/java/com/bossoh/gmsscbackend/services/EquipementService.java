@@ -13,7 +13,7 @@ public interface EquipementService {
 
     Equipement updateEquipement(Equipement equipement);
 
-    Equipement getEquipementyId(Long id);
+    Equipement getEquipementById(Long id);
 
     Equipement getEquipementByCode(String codeEquipement);
 

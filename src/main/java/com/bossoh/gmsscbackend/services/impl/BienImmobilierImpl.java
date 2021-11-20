@@ -99,7 +99,7 @@ public class BienImmobilierImpl implements BienImmobilierService {
 
     @Override
     public boolean deleteBienImmobilier(Long id) {
-        log.info("Nous supprimons un bien si l'ID de la société existe ");
+        log.info("Nous supprimons un bien si l'ID de la bien immobilier existe ");
         boolean exist=bienImmobilierRepository.existsById(id);
         if (!exist)
         {

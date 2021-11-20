@@ -66,4 +66,6 @@ public class Societe  {
 	private String steWeb;
 	@OneToMany(mappedBy = "societe")
 	private List<BienImmobilier> bienImmobiliers;
+	@OneToOne
+	private Contrat contrat;
 }

@@ -67,7 +67,7 @@ public class EquipementServiceImpl implements EquipementService {
     }
 
     @Override
-    public Equipement getEquipementyId(Long id) {
+    public Equipement getEquipementById(Long id) {
 
         log.info("We are going to get back a equipement by ID {}",id);
 
