@@ -1,12 +1,11 @@
 package com.bossoh.gmsscbackend.services.impl;
-
+import com.bossoh.gmsscbackend.Dto.PiecesDto;
 import com.bossoh.gmsscbackend.Validator.PieceValidator;
-import com.bossoh.gmsscbackend.utils.UtilRandom;
 import com.bossoh.gmsscbackend.entities.BienImmobilier;
-import com.bossoh.gmsscbackend.entities.Pieces;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
 import com.bossoh.gmsscbackend.exceptions.InvalidEntityExeception;
+import com.bossoh.gmsscbackend.utils.UtilRandom;
 import com.bossoh.gmsscbackend.repositories.BienImmobilierRepository;
 import com.bossoh.gmsscbackend.repositories.PieceRepository;
 import com.bossoh.gmsscbackend.services.PieceService;
@@ -14,9 +13,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Slf4j
 @Service
@@ -29,89 +31,77 @@ public class PieceServiceImpl implements PieceService {
     private final UtilRandom utilRandom;
 
     @Override
-    public List<Pieces> listOfPieces() {
-        log.info("we going to retreive all the pieces");
-        return pieceRepository.findAll();
-    }
-
-    @Override
-    public Pieces savePiece(Pieces pieces) {
-        log.info("We are going to save a new piece {}", pieces);
-        List<String> errors= PieceValidator.validate(pieces);
-       if(!errors.isEmpty()){
-            throw new InvalidEntityExeception("Lapiece possede certains de ses attributs qui sont null",
-                    ErrorCodes.PIECE_NOT_VALID,errors);
-       }
-       Optional<BienImmobilier>bienImmo= bienImmobilierRepository.findById(pieces.getBienImmobilier().getId());
-       if(bienImmo.isPresent()){
-           pieces.setBienImmobilier(bienImmo.get());
-       } else{
-           throw new InvalidEntityExeception("L'objet bien immobilier possede certains de ses attributs qui sont null",
-                   ErrorCodes.BIEN_IMMOBILIER_NOT_FOUND,errors);
-       }
-        pieces.setCodePiece(utilRandom.generatedRandomString(6));
-       return pieceRepository.save(pieces);
-
-    }
-
-    @Override
-    public Pieces updatePiece(Pieces pieces) {
-        log.info("We are going to update a existing piece");
-        Optional<Pieces> piecetest= pieceRepository.
-                findById(pieces.getId());
-        if(piecetest.isPresent()){
-            log.info("The piece is well existing...");
-            List<String> errors= PieceValidator.validate(pieces);
-            if(!errors.isEmpty()){
-                throw new InvalidEntityExeception("L'objet piece possede certains de ses attributs null",
-                        ErrorCodes.PIECE_NOT_VALID,errors);
-            }
-            return pieceRepository.save(pieces);
-        }else {
-            throw new InvalidEntityExeception("L'objet piece doesn't exist in the BD",
-                    ErrorCodes.PIECE_NOT_FOUND);
+    public PiecesDto savePiece(PiecesDto pieceDto) {
+        log.info("We are going to save a new piece {}", pieceDto);
+        List<String> errors = PieceValidator.validate(pieceDto);
+        if (!errors.isEmpty()) {
+            log.error("Le bien n'est pas valide {}", errors);
+            throw new InvalidEntityExeception("Certain attributs de l'object piece sont null.",
+                    ErrorCodes.PIECE_NOT_VALID, errors);
         }
+        Optional<BienImmobilier> bienDto = bienImmobilierRepository.findBienImmobilierById(pieceDto.getBienImmobilierDto().getId());
+        if (!bienDto.isPresent()) {
+            log.warn("Client with ID {} was not found in the DB", pieceDto.getBienImmobilierDto().getId());
+            throw new EntityNotFoundException("Aucun Bien immobilier avec l'ID" + pieceDto.getBienImmobilierDto().getId() + " n'a ete trouve dans la BDD",
+                    ErrorCodes.BIEN_IMMOBILIER_NOT_FOUND);
+        }
+        if (pieceDto.getId() == null) {
+            pieceDto.setCodePiece(utilRandom.generatedRandomString(6));
+        }
+            log.info("we are rich that point {}",pieceDto);
+        return PiecesDto.fromEntity(pieceRepository.save(PiecesDto.toEntity(pieceDto)));
     }
 
     @Override
-    public Pieces getPieceById(Long id) {
-        log.info("We are going to get back a piece by ID {}",id);
-
-        if (id == null) {
-            log.error("bien immobilier ID is null");
+    public PiecesDto getPieceById(Long idDto) {
+        log.info("We are going to get back the piece en fonction de l'ID {} de la piece", idDto);
+        if (idDto == null) {
+            log.error("you are provided a null ID for the piece");
             return null;
         }
-        return pieceRepository.findById(id).orElseThrow(
-                ()-> new EntityNotFoundException("Aucune pièce avec l'ID = " + id + " "
-                        + "n' ete trouve dans la BDD",  ErrorCodes.PIECE_NOT_FOUND)
-        );
+        return pieceRepository.findById(idDto)
+                .map(PiecesDto::fromEntity)
+                .orElseThrow(() -> new InvalidEntityExeception("Aucune piece has been found with ID " + idDto,
+                        ErrorCodes.PIECE_NOT_FOUND));
     }
 
     @Override
-    public Pieces getPieceByCode(String codePiece) {
-        log.info("We are going to get back a piece by code piece {}",codePiece);
-
-        if (codePiece == null) {
-            log.error("le code de la piece is null");
+    public PiecesDto getPieceByCode(String codePieceDto) {
+        log.info("We are going to get back the piece with code {}", codePieceDto);
+        if (!StringUtils.hasLength(codePieceDto)) {
+            log.error("you are not provided a code for this piece");
             return null;
         }
-        return pieceRepository.findPieceByCodePiece(codePiece).orElseThrow(
-                ()-> new EntityNotFoundException("Aucune pièce avec le code = " + codePiece + " "
-                        + "n' ete trouve dans la BDD",  ErrorCodes.PIECE_NOT_FOUND)
-        );
+        return pieceRepository.findPieceByCodePiece(codePieceDto)
+                .map(PiecesDto::fromEntity)
+                .orElseThrow(() -> new InvalidEntityExeception("Aucune piece has been found with Code " + codePieceDto,
+                        ErrorCodes.PIECE_NOT_FOUND));
     }
 
     @Override
-    public boolean deletePiece(Long id) {
-        log.info("Nous supprimons une piece si l'ID de la société existe ");
-        boolean exist=pieceRepository.existsById(id);
-        if (!exist)
-        {
-            throw new EntityNotFoundException("Aucune piece avec l'ID = " + id + " "
-                    + "n' ete trouve dans la BDD",  ErrorCodes.PIECE_NOT_FOUND);
+    public boolean deletePiece(Long idDto) {
+        log.info("We are going to delete a bien Piece {}", idDto);
+        if (idDto == null) {
+            log.error("you are provided a null ID for the piece");
+            return false;
+        }
+        boolean exist = pieceRepository.existsById(idDto);
+        if (!exist) {
+            throw new EntityNotFoundException("Aucune piece avec l'ID = " + idDto + " "
+                    + "n' ete trouve dans la BDD", ErrorCodes.PIECE_NOT_FOUND);
 
         }
-        pieceRepository.deleteById(id);
+        //TODO VERIFICATION SI EXISTE UN BIEN AVEC UNE PEIECE
+        pieceRepository.deleteById(idDto);
         return true;
+    }
+
+    @Override
+    public List<PiecesDto> listOfPieces() {
+        log.info("We are going to take back all the Piece");
+
+        return pieceRepository.findAll().stream()
+                .map(PiecesDto::fromEntity)
+                .collect(Collectors.toList());
     }
 }

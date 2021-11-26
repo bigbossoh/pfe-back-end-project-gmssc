@@ -1,6 +1,6 @@
 package com.bossoh.gmsscbackend.controller;
 
-import com.bossoh.gmsscbackend.entities.Pieces;
+import com.bossoh.gmsscbackend.Dto.PiecesDto;
 import com.bossoh.gmsscbackend.services.impl.PieceServiceImpl;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -20,22 +20,22 @@ public class PieceController {
 
 
     @GetMapping(value=APP_ROOT+"/pieces/all",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Pieces> getListeDesPieces() {
+    public List<PiecesDto> getListeDesPieces() {
         return pieceService.listOfPieces();
     }
 
     @GetMapping(value=APP_ROOT+"/pieces/{IdPiece}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Pieces getPieceByID(@PathVariable("IdPiece") Long IdPiece) {
+    public PiecesDto getPieceByID(@PathVariable("IdPiece") Long IdPiece) {
         return pieceService.getPieceById(IdPiece);
     }
-    @GetMapping(value=APP_ROOT+"/pieces/getPiece/{codebien}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Pieces getPieceByID(@PathVariable("CodePiece") String CodePiece) {
+    @GetMapping(value=APP_ROOT+"/pieces/getPiece/{codePiece}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public PiecesDto getPieceByCodePiece(@PathVariable("CodePiece") String CodePiece) {
         return pieceService.getPieceByCode(CodePiece);
     }
     @PostMapping(value =APP_ROOT+"/pieces/savepiece",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Pieces savePiece(@RequestBody Pieces pieces) {
+    public PiecesDto savePiece(@RequestBody PiecesDto pieces) {
 
         return pieceService.savePiece(pieces);
     }
@@ -45,11 +45,5 @@ public class PieceController {
         return pieceService.deletePiece(idPiece);
     }
 
-    @PutMapping(value =APP_ROOT+"/pieces/update",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public Pieces updatingSociete(@RequestBody Pieces pieces) {
-        return pieceService.updatePiece(pieces);
-    }
 }
 

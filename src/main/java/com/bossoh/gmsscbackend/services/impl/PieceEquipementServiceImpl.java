@@ -1,9 +1,8 @@
 package com.bossoh.gmsscbackend.services.impl;
 
+import com.bossoh.gmsscbackend.Dto.PieceEquipementDto;
 import com.bossoh.gmsscbackend.Validator.PieceEquipementValidator;
-import com.bossoh.gmsscbackend.utils.UtilRandom;
 import com.bossoh.gmsscbackend.entities.Equipement;
-import com.bossoh.gmsscbackend.entities.PieceEquipement;
 import com.bossoh.gmsscbackend.entities.Pieces;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
@@ -16,12 +15,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import static java.time.LocalTime.now;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -29,89 +26,77 @@ import static java.time.LocalTime.now;
 @Transactional
 public class PieceEquipementServiceImpl implements PieceEquipementService {
     private final PieceEquipementRepository pieceEquipementRepository;
-    private final UtilRandom utilRandom;
     private final PieceRepository pieceRepository;
     private final EquipementRepository equipementRepository;
-    @Override
-    public List<PieceEquipement> listOfPieceEquipement() {
-        return pieceEquipementRepository.findAll();
-    }
+
+
 
     @Override
-    public PieceEquipement savePieceEquipement(PieceEquipement pieceEquipement) {
-        log.info("We are saving a new pieceEquipement {} ",pieceEquipement);
-        List<String> errors= PieceEquipementValidator.validator(pieceEquipement);
-        log.error(String.valueOf(errors));
+    public PieceEquipementDto savePieceEquipement(PieceEquipementDto pedto) {
+        log.info("We are saving a new pieceEquipement {} ",pedto);
+        List<String> errors= PieceEquipementValidator.validator(pedto);
         if(!errors.isEmpty()){
-            throw new InvalidEntityExeception("L'objet bien pieceEquipement possede certains de ses attributs null",
+            log.error("L'objet pieceEquipement n'est pas valide {}",errors);
+            throw new InvalidEntityExeception("Certain attributs de l'object pieceEquipement sont null.",
                     ErrorCodes.EQUIPEMENT_PIECE_NOT_VALID,errors);
         }
-        log.info(pieceEquipement.getEquipement().getId().toString());
-        Optional<Equipement> eqpt=equipementRepository.findById(pieceEquipement.getEquipement().getId());
-        if(eqpt.isPresent()){
-            pieceEquipement.setEquipement(eqpt.get());
-        }else
-        {
-            throw new InvalidEntityExeception("L'objet equipement possede certains de ses attributs null",
+        Optional<Equipement> eqpt = equipementRepository.findById(pedto.getEquipementDto().getId());
+        if (!eqpt.isPresent()) {
+            log.warn("L'equipement with ID {} was not found in the DB", pedto.getEquipementDto().getId());
+            throw new EntityNotFoundException("Aucun equipement avec l'ID" + pedto.getEquipementDto().getId() + " n'a ete trouve dans la BDD",
                     ErrorCodes.EQUIPEMENT_NOT_FOUND);
         }
-        log.info(pieceEquipement.getPieces().getId().toString());
-        Optional<Pieces> pcs=pieceRepository.findById(pieceEquipement.getPieces().getId());
-        if(pcs.isPresent()){
-            pieceEquipement.setPieces(pcs.get());
-        }else
-        {
-            throw new InvalidEntityExeception("L'objet Piece possede certains de ses attributs null",
+        Optional<Pieces> pc = pieceRepository.findById(pedto.getPiecesDto().getId());
+        if (!pc.isPresent()) {
+            log.warn("La pièce with ID {} was not found in the DB", pedto.getPiecesDto().getId());
+            throw new EntityNotFoundException("Aucune piece avec l'ID" + pedto.getPiecesDto().getId()+ " n'a ete trouve dans la BDD",
                     ErrorCodes.PIECE_NOT_FOUND);
         }
 
-        pieceEquipement.setDateInstallation(LocalDate.now());
-        return pieceEquipementRepository.save(pieceEquipement);
+        return PieceEquipementDto
+                .fromEntity(pieceEquipementRepository
+                        .save(PieceEquipementDto.toEntity(pedto))
+                );
     }
 
     @Override
-    public PieceEquipement updatePieceEquipement(PieceEquipement pieceEquipement) {
-        log.info("We are going to update a existing PieceEquipement");
-        Optional<PieceEquipement> pEqt= pieceEquipementRepository.findById(pieceEquipement.getId());
-        if(pEqt.isPresent()){
-            log.info("The PieceEquipement is well existing...");
-            List<String> errors= PieceEquipementValidator.validator(pieceEquipement);
-            if(!errors.isEmpty()){
-                throw new InvalidEntityExeception("L'objet piece immobilier possede certains de ses attributs null",
-                        ErrorCodes.EQUIPEMENT_PIECE_NOT_VALID,errors);
-            }
-            return pieceEquipementRepository.save(pieceEquipement);
-        }else {
-            throw new InvalidEntityExeception("L'objet piece immobilier doesn't exist in the BD",
-                    ErrorCodes.EQUIPEMENT_PIECE_NOT_FOUND);
-        }
-    }
-
-    @Override
-    public PieceEquipement getPieceEquipementyId(Long id) {
-        log.info("We are going to get back a piece equipement by ID {}",id);
-
-        if (id == null) {
-            log.error("pieceEquipement  ID is null");
+    public PieceEquipementDto getPieceEquipementyId(Long id) {
+        log.info("We are going to get back the Piece Equipement en fonction de l'ID {} du bien", id);
+        if(id==null){
+            log.error("you are provided a null ID for the Piece Equipement");
             return null;
         }
-        return pieceEquipementRepository.findById(id).orElseThrow(
-                ()-> new EntityNotFoundException("Aucun bien avec l'ID = " + id + " "
-                        + "n' ete trouve dans la BDD",  ErrorCodes.EQUIPEMENT_PIECE_NOT_FOUND)
-        );
+        return pieceEquipementRepository.findById(id)
+                .map(PieceEquipementDto::fromEntity)
+                .orElseThrow(()->new InvalidEntityExeception("Aucun bien immobilier has been found with ID "+id,
+                        ErrorCodes.EQUIPEMENT_PIECE_NOT_FOUND));
     }
 
     @Override
     public boolean deletePieceEquipement(Long id) {
-        log.info("Nous supprimons un bien si l'ID de la PieceEquipement existe ");
+        log.info("We are going to delete a Piece Equipement {}", id);
+        if (id==null){
+            log.error("you are provided a null ID for the Piece Equipement");
+            return false;
+        }
         boolean exist=pieceEquipementRepository.existsById(id);
         if (!exist)
         {
-            throw new EntityNotFoundException("Aucun bien avec l'ID = " + id + " "
+            throw new EntityNotFoundException("Aucun Piece Equipement avec l'ID = " + id + " "
                     + "n' ete trouve dans la BDD",  ErrorCodes.EQUIPEMENT_PIECE_NOT_FOUND);
 
         }
         pieceEquipementRepository.deleteById(id);
         return true;
     }
+
+    @Override
+    public List<PieceEquipementDto> listOfPieceEquipement() {
+        log.info("We are going to take back all the PieceEquipent");
+
+        return pieceEquipementRepository.findAll().stream()
+                .map(PieceEquipementDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
 }

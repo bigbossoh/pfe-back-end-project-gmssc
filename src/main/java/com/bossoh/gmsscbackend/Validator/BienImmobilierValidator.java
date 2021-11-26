@@ -1,5 +1,6 @@
 package com.bossoh.gmsscbackend.Validator;
 
+import com.bossoh.gmsscbackend.Dto.BienImmobilierDto;
 import com.bossoh.gmsscbackend.entities.BienImmobilier;
 import org.springframework.util.StringUtils;
 
@@ -7,25 +8,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BienImmobilierValidator {
-    public static List<String> validate(BienImmobilier bienImmobilier){
+    public static List<String> validate(BienImmobilierDto dto){
         List<String>errors= new ArrayList<>();
-        if(bienImmobilier==null ){
+        if(dto==null ){
             errors.add("Veuillez renseillez le nom du bien immobilier");
             errors.add("Veuillez renseigner le type de bien immobilier");
-            errors.add("Veuillez renseigner le nombre de batiments qu'il ya sur ce bien immobilier");
+            errors.add("Veuillez renseigner le nombre de batiments qu'il ya sur le site dudit bien immobilier");
             errors.add("Veuillez selectionner une société");
             return errors;
         }
-        if(!StringUtils.hasLength(bienImmobilier.getNomBienImmobilier())){
+        if(!StringUtils.hasLength(dto.getNomBienImmobilier())){
             errors.add("Veuillez renseillez le nom du bien immobilier");
         }
-        if( !StringUtils.hasLength(bienImmobilier.getTypeBienImmobilier().toString())){
+        if( !StringUtils.hasLength(dto.getTypeBienImmobilier())){
             errors.add("Veuillez renseigner le type de bien immobilier");
         }
-        if (bienImmobilier.getNbreBatiments() == null){
-            errors.add("Veuillez renseigner le nombre de batiments qu'il ya sur ce bien immobilier");
+        if (dto.getNbreBatiments() == null){
+            errors.add("Veuillez renseigner le nombre de batiments qu'il ya sur le site dudit bien immobilier");
         }
-        if(bienImmobilier.getSociete()==null || bienImmobilier.getSociete().getId()==null){
+        if(dto.getSocieteDto()==null || dto.getSocieteDto().getId()==null){
             errors.add("Veuillez selectionner une société");
         }
         return errors;

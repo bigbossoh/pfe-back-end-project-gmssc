@@ -1,5 +1,6 @@
 package com.bossoh.gmsscbackend.services;
 
+import com.bossoh.gmsscbackend.Dto.BienImmobilierDto;
 import com.bossoh.gmsscbackend.entities.BienImmobilier;
 import com.bossoh.gmsscbackend.entities.Societe;
 import org.springframework.stereotype.Service;
@@ -10,17 +11,17 @@ import java.util.List;
 
 public interface BienImmobilierService {
 
-    List<BienImmobilier> listOfBienImmobiliers();
 
-    BienImmobilier saveBienImmobilier(BienImmobilier bien);
 
-    BienImmobilier updateBienImmobilier(BienImmobilier bien);
+    BienImmobilierDto saveBienImmobilier(BienImmobilierDto bienDto);
 
-    BienImmobilier getBienImmobilierById(Long id);
+    BienImmobilierDto getBienImmobilierById(Long idDto);
 
-    BienImmobilier getBienImmobilierByCode(String codeBien);
+    BienImmobilierDto getBienImmobilierByCode(String codeBienDto);
 
-    boolean deleteBienImmobilier(Long id);
+    boolean deleteBienImmobilier(Long idDto);
+
+    List<BienImmobilierDto> listOfBienImmobiliers();
 
 
 }

@@ -2,23 +2,19 @@ package com.bossoh.gmsscbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table
-public class Contrat {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Contrat extends AbstractEntity {
     private String codeContrat;
     private LocalDate dateSignature;
     private int dureeContrat;
@@ -35,14 +31,15 @@ public class Contrat {
     private boolean depoussierageNettoyageUnites;
     private boolean verificationEcoulementEaux;
     private boolean desinfectionNettoyageBacs;
-    private boolean nettoyageEnlèvementResidus;
+    private boolean nettoyageEnlevementResidus;
     private boolean etablissementRapportVisite;
     private boolean risquesEventuels;
     private boolean coutInterventionsInclus ;
     private boolean coutInterventionsExclus;
     private boolean coutInterventionsFacture;
-    @OneToOne(mappedBy = "contrat")
+    @OneToOne
+    @JoinColumn(name = "societe_id", referencedColumnName = "id")
     private Societe societe;
-    @OneToMany(mappedBy = "contrat")
-    private List<Equipement> listEquipement;
+    @OneToMany(mappedBy = "contratEquipement")
+    private List<Equipement> Equipements;
 }

@@ -1,4 +1,5 @@
 package com.bossoh.gmsscbackend.services;
+import com.bossoh.gmsscbackend.Dto.PiecesDto;
 import com.bossoh.gmsscbackend.entities.Pieces;
 
 import java.util.List;
@@ -6,17 +7,15 @@ import java.util.List;
 public interface PieceService {
 
 
-    List<Pieces> listOfPieces();
+    List<PiecesDto> listOfPieces();
 
-    Pieces savePiece(Pieces pieces);
+    PiecesDto savePiece(PiecesDto pieceDto);
 
-    Pieces updatePiece(Pieces pieces);
+    PiecesDto getPieceById(Long idDto);
 
-    Pieces getPieceById(Long id);
+    PiecesDto getPieceByCode(String codePieceDto);
 
-    Pieces getPieceByCode(String codePiece);
-
-    boolean deletePiece(Long id);
+    boolean deletePiece(Long idDto);
 
 
 }
