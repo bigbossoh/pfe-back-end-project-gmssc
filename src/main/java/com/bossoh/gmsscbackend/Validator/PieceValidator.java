@@ -1,4 +1,5 @@
 package com.bossoh.gmsscbackend.Validator;
+import com.bossoh.gmsscbackend.Dto.PiecesDto;
 import com.bossoh.gmsscbackend.entities.Pieces;
 import org.springframework.util.StringUtils;
 
@@ -6,26 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PieceValidator {
-    public static List<String> validate(Pieces pieces){
+    public static List<String> validate(PiecesDto dto){
         List<String>errors= new ArrayList<>();
-        if(pieces ==null ){
+        if(dto ==null ){
             errors.add("Veuillez renseillez le nom de la pièce.");
             errors.add("Veuillez renseigner le type de pièce.");
-            errors.add("Veuillez renseigner le nom du batiments.");
-            errors.add("Veuillez selectionner un bien immobilier.");
+            errors.add("Veuillez renseigner un bien immobilier.");
             return errors;
         }
-        if(!StringUtils.hasLength(pieces.getNomPiece())){
+        if(!StringUtils.hasLength(dto.getNomPiece())){
             errors.add("Veuillez renseillez le nom de la pièce.");
         }
-        if( !StringUtils.hasLength(pieces.getTypeSalle().toString())){
+        if( !StringUtils.hasLength(dto.getTypeSalle())){
             errors.add("Veuillez renseigner le type de pièce.");
         }
-        if (pieces.getNomBatiment() == null){
-            errors.add("Veuillez renseigner le nom du batiments.");
-        }
-        if(pieces.getBienImmobilier()==null || pieces.getBienImmobilier().getId()==null){
-            errors.add("Veuillez selectionner un bien immobilier.");
+
+        if(dto.getBienImmobilierDto()==null || dto.getBienImmobilierDto().getId()==null){
+            errors.add("Veuillez renseigner un bien immobilier.");
         }
         return errors;
     }

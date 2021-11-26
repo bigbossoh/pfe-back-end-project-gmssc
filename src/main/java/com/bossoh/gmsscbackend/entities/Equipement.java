@@ -2,23 +2,20 @@ package com.bossoh.gmsscbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.List;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Equipement {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Equipement extends AbstractEntity {
+
     private String codeEquipement;
     private String marque;
     private String numeroSerie;
@@ -29,7 +26,7 @@ public class Equipement {
     private double poidsNetInterieur;
     private double poidsNetExterieur;
     private String puissance;
-    private LocalDate dateAchat;
+    private Instant dateAchat;
     private Integer garantie;
     private String nomFournisseur;
     private String personneRessource;
@@ -41,5 +38,6 @@ public class Equipement {
     @OneToMany(mappedBy = "equipement")
     private List<PieceEquipement> pieceEquipements;
     @ManyToOne
-    private Contrat contrat;
+    @JoinColumn(name="id_contrat")
+    private Contrat contratEquipement;
 }

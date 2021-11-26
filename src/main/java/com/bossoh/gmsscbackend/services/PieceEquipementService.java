@@ -1,19 +1,16 @@
 package com.bossoh.gmsscbackend.services;
 
-import com.bossoh.gmsscbackend.entities.Equipement;
-import com.bossoh.gmsscbackend.entities.PieceEquipement;
-import com.bossoh.gmsscbackend.entities.Pieces;
+import com.bossoh.gmsscbackend.Dto.PieceEquipementDto;
 
 import java.util.List;
 
 public interface PieceEquipementService {
-    List<PieceEquipement> listOfPieceEquipement();
 
-    PieceEquipement savePieceEquipement(PieceEquipement pieceEquipement);
+    List<PieceEquipementDto> listOfPieceEquipement();
 
-    PieceEquipement updatePieceEquipement(PieceEquipement pieceEquipement);
+    PieceEquipementDto savePieceEquipement(PieceEquipementDto pedto);
 
-    PieceEquipement getPieceEquipementyId(Long id);
+    PieceEquipementDto getPieceEquipementyId(Long id);
 
     boolean deletePieceEquipement(Long id);
 }

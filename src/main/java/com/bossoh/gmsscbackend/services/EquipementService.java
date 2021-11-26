@@ -1,21 +1,17 @@
 package com.bossoh.gmsscbackend.services;
-
-import com.bossoh.gmsscbackend.entities.BienImmobilier;
-import com.bossoh.gmsscbackend.entities.Equipement;
+import com.bossoh.gmsscbackend.Dto.EquipementDto;
 
 import java.util.List;
 
 public interface EquipementService {
 
-    List<Equipement> listOfEquipement();
+    List<EquipementDto> listOfEquipement();
 
-    Equipement saveEquipement(Equipement equipement);
+    EquipementDto saveEquipement(EquipementDto equipementDto);
 
-    Equipement updateEquipement(Equipement equipement);
+    EquipementDto getEquipementById(Long id);
 
-    Equipement getEquipementById(Long id);
-
-    Equipement getEquipementByCode(String codeEquipement);
+    EquipementDto getEquipementByCode(String codeEquipement);
 
     boolean deleteEquipement(Long id);
 

@@ -1,24 +1,19 @@
 package com.bossoh.gmsscbackend.entities;
 
-import com.bossoh.gmsscbackend.entities.enumeration.TypeSalle;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Pieces {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Pieces extends AbstractEntity{
     private String codePiece;
     private String nomPiece;
     private String nomBatiment;
@@ -27,9 +22,10 @@ public class Pieces {
     private int positionEtage;
     private String typeSalle;
     @ManyToOne
+    @JoinColumn(name="id_bien_immobilier")
     private BienImmobilier bienImmobilier;
-    @OneToMany(mappedBy = "pieces")
-    private List<PieceEquipement> pieceEquipements;
+//    @OneToMany(mappedBy = "pieces")
+//    private List<PieceEquipement> pieceEquipements;
 
 
 }

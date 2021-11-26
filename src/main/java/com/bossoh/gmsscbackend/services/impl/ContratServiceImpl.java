@@ -1,14 +1,13 @@
 package com.bossoh.gmsscbackend.services.impl;
 
-import com.bossoh.gmsscbackend.Validator.BienImmobilierValidator;
+import com.bossoh.gmsscbackend.Dto.ContratDto;
+import com.bossoh.gmsscbackend.Dto.EquipementDto;
 import com.bossoh.gmsscbackend.Validator.ContratValidator;
-import com.bossoh.gmsscbackend.entities.BienImmobilier;
-import com.bossoh.gmsscbackend.entities.Contrat;
-import com.bossoh.gmsscbackend.entities.Equipement;
-import com.bossoh.gmsscbackend.entities.Societe;
+import com.bossoh.gmsscbackend.entities.*;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
 import com.bossoh.gmsscbackend.exceptions.InvalidEntityExeception;
+import com.bossoh.gmsscbackend.exceptions.InvalidOperationException;
 import com.bossoh.gmsscbackend.repositories.ContratRepository;
 import com.bossoh.gmsscbackend.repositories.EquipementRepository;
 import com.bossoh.gmsscbackend.repositories.SocieteRepository;
@@ -28,111 +27,112 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class ContratServiceImpl implements ContratService {
-    private  static ContratRepository contratRepository;
+    private final ContratRepository contratRepository;
     private final SocieteRepository societeRepository;
     private final EquipementRepository equipementRepository;
     private final UtilRandom utilRandom;
-    @Override
-    public List<Contrat> listOfContrat() {
-        log.info("We are going to get back all contrats");
-        return contratRepository.findAll();
-    }
+
 
     @Override
-    public Contrat saveContrat(Contrat contrat) {
-        log.info("We are going to save a new contrat {}",contrat);
-        List<String> errors= ContratValidator.Validate(contrat);
-        if(!errors.isEmpty()){
-            throw new InvalidEntityExeception("L'objet contrat possede certains de ses attributs null",
-                    ErrorCodes.CONTRAT_NOT_VALID,errors);
+    public ContratDto saveContrat(ContratDto contrat) {
+        log.info("We are going to save a new contrat {}", contrat);
+        List<String> errors = ContratValidator.Validate(contrat);
+        if (!errors.isEmpty()) {
+            log.error("le contrat n'est pas valide {}", errors);
+            throw new InvalidEntityExeception("Certain attributs de l'object contrat sont null.",
+                    ErrorCodes.CONTRAT_NOT_VALID, errors);
         }
-        Optional<Societe> soc=societeRepository.findById(contrat.getSociete().getId());
-        if(soc.isPresent()){
-            contrat.setSociete(soc.get());
-        }else
-        {
-            throw new InvalidEntityExeception("L'objet societe possede certains de ses attributs null",
+        Optional<Societe> contratsoc = societeRepository.findById(contrat.getSocieteDto().getId());
+        if (!contratsoc.isPresent()) {
+            log.warn("La societe with ID {} was not found in the DB", contrat.getSocieteDto().getId());
+            throw new EntityNotFoundException("Aucune société  avec l'ID" + contrat.getSocieteDto().getId() + " n'a ete trouve dans la BDD",
                     ErrorCodes.SOCIETE_NOT_FOUND);
         }
-        contrat.setCodeContrat(utilRandom.generatedRandomString(6));
-        log.info("contrat is saved...");
+        if (contrat.getId() == null) {
+            contrat.setCodeContrat(utilRandom.generatedRandomString(6));
+        }
+        Contrat saveContrat = contratRepository.save(ContratDto.toEntity(contrat));
 
-        Contrat c= contratRepository.save(contrat);
-        if (contrat.getListEquipement() != null) {
-            contrat.getListEquipement().forEach(Eqpe -> {
-                Eqpe.setContrat(c);
-                Equipement savedEqpe = equipementRepository.save(Eqpe);
+        List<String> equipementErrors = new ArrayList<>();
+
+        if (contrat.getEquipementDtos() != null) {
+            contrat.getEquipementDtos().forEach(eqpt -> {
+                if (eqpt == null) {
+
+                    equipementErrors.add("On a des equipements qui sont null");
+                } else {
+                    Optional<Equipement> equipement = equipementRepository.findById(eqpt.getId());
+                    if (!equipement.isPresent()) {
+                        equipementErrors.add("L'article avec l'ID " + eqpt.getId() + " n'existe pas");
+                    }
+                }
             });
         }
 
-        return c;
-
-    }
-
-    @Override
-    public Contrat updateContrat(Contrat contrat) {
-        log.info("We are going to update a existing contrat");
-        Optional<Contrat> con= contratRepository.
-                findById(contrat.getId());
-        if(con.isPresent()){
-            log.info("The contrat is well existing...");
-            List<String> errors=ContratValidator.Validate(contrat);
-            if(!errors.isEmpty()){
-                throw new InvalidEntityExeception("L'objet contrat possede certains de ses attributs null",
-                        ErrorCodes.CONTRAT_NOT_VALID,errors);
-            }
-            log.info("Contrat updated...");
-            return contratRepository.save(contrat);
-
-        }else {
-            throw new InvalidEntityExeception("L'objet contrat doesn't exist in the BD",
-                    ErrorCodes.CONTRAT_NOT_FOUND);
+        if (!equipementErrors.isEmpty()) {
+            log.warn("");
+            throw new InvalidEntityExeception("Equipement n'existe pas dans la BDD", ErrorCodes.EQUIPEMENT_NOT_FOUND, equipementErrors);
         }
+        if (contrat.getEquipementDtos() != null) {
+            contrat.getEquipementDtos().forEach(ligEqpt -> {
+                Optional<Equipement> Equip=equipementRepository.findById(ligEqpt.getId());
+                if(Equip.isPresent()){
+                    Equipement equiptCharge=Equip.get();
+                    equiptCharge.setContratEquipement(saveContrat);
+                    Equipement savedEqpt = equipementRepository.save(equiptCharge);
+                }else
+                {
+                    throw new InvalidEntityExeception("L'objet equipement possede certains de ses attributs null",
+                            ErrorCodes.SOCIETE_NOT_FOUND);
+                }
+            });
+        }
+        return ContratDto.fromEntity(saveContrat);
+
     }
 
     @Override
-    public Contrat getContratId(Long id) {
-        log.info("We are going to get back a Contrat by ID {}",id);
-
+    public ContratDto getContratId(Long id) {
+        log.info("We are going to get back the contrat en fonction de l'ID {} du bien", id);
         if (id == null) {
-            log.error("Contrat ID is null");
+            log.error("you are provided a null ID for the contrat");
             return null;
         }
-        return contratRepository.findContratById(id).orElseThrow(
-                ()-> new EntityNotFoundException("Aucun bien avec l'ID = " + id + " "
-                        + "n' ete trouve dans la BDD",  ErrorCodes.CONTRAT_NOT_FOUND)
-        );
+        return contratRepository.findContratById(id)
+                .map(ContratDto::fromEntity)
+                .orElseThrow(() -> new InvalidEntityExeception("Aucun bien immobilier has been found with ID " + id,
+                        ErrorCodes.CONTRAT_NOT_FOUND));
     }
 
     @Override
-    public Contrat getContratByCode(String codeContrat) {
-        log.info("We are going to get back a Contrat by ID {}",codeContrat);
-
-        if (codeContrat == null) {
-            log.error("Contrat ID is null");
-            return null;
+    public boolean deleteContrat(Long id) {
+        log.info("We are going to delete a contrat {}", id);
+        if (id == null) {
+            log.error("you are provided a null ID for the contrat");
+            return false;
         }
-        return contratRepository.findContratByCodeContrat(codeContrat).orElseThrow(
-                ()-> new EntityNotFoundException("Aucune bien immobilier avec l'ID = " + codeContrat + " "
-                        + "n' ete trouve dans la BDD",  ErrorCodes.CONTRAT_NOT_FOUND)
-        );
-    }
-
-    @Override
-    public boolean deleteEquipement(Long id) {
-        log.info("Nous supprimons un bien si l'ID de la contract existe ");
-        boolean exist=contratRepository.existsById(id);
-        if (!exist)
-        {
+        boolean exist = contratRepository.existsById(id);
+        if (!exist) {
             throw new EntityNotFoundException("Aucun bien avec l'ID = " + id + " "
-                    + "n' ete trouve dans la BDD",  ErrorCodes.CONTRAT_NOT_FOUND);
-
+                    + "n' ete trouve dans la BDD", ErrorCodes.CONTRAT_NOT_FOUND);
+        }
+        Optional<Contrat> c = contratRepository.findContratById(id);
+        if (!c.isPresent()) {
+            log.warn("La societe with ID {} was not found in the DB", c);
+            throw new EntityNotFoundException("Aucune société  avec l'ID" + c + " n'a ete trouve dans la BDD",
+                    ErrorCodes.SOCIETE_NOT_FOUND);
+        }
+        List<Equipement> eqpList = equipementRepository.findEquipementByContratEquipement(c);
+        if (!eqpList.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un contrat déjà utilisé",
+                    ErrorCodes.CONTRAT_ALREADY_IN_USE);
         }
         contratRepository.deleteById(id);
         return true;
     }
 
-//    public Equipement updateEquipement(Contrat contrat){
-//
-//    }
+    @Override
+    public List<ContratDto> listOfContrat() {
+        return null;
+    }
 }

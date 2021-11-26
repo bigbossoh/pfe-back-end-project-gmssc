@@ -1,6 +1,6 @@
 package com.bossoh.gmsscbackend.controller;
 
-import com.bossoh.gmsscbackend.entities.Equipement;
+import com.bossoh.gmsscbackend.Dto.EquipementDto;
 import com.bossoh.gmsscbackend.services.impl.EquipementServiceImpl;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -19,21 +19,21 @@ public class EquipementController {
 
 
     @GetMapping(value=APP_ROOT+"/equipements/all",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Equipement> getListeDesEquipements() {
+    public List<EquipementDto> getListeDesEquipements() {
         return equipementService.listOfEquipement();
     }
     @GetMapping(value=APP_ROOT+"/equipements/{IdEquipement}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Equipement getEquipementByID(@PathVariable("IdEquipement") Long IdEquipement) {
+    public EquipementDto getEquipementByID(@PathVariable("IdEquipement") Long IdEquipement) {
         return equipementService.getEquipementById(IdEquipement);
     }
     @GetMapping(value=APP_ROOT+"/equipements/getPiece/{CodeEquipement}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Equipement getPieceByID(@PathVariable("CodeEquipement") String CodeEquipement) {
+    public EquipementDto getPieceByID(@PathVariable("CodeEquipement") String CodeEquipement) {
         return equipementService.getEquipementByCode(CodeEquipement);
     }
     @PostMapping(value =APP_ROOT+"/equipements/saveEquipement",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Equipement savePiece(@RequestBody Equipement equipement) {
+    public EquipementDto savePiece(@RequestBody EquipementDto equipement) {
 
         return equipementService.saveEquipement(equipement);
     }
@@ -42,11 +42,5 @@ public class EquipementController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean deleteEquipementById(@PathVariable("idEquipement") Long idEquipement) {
         return equipementService.deleteEquipement(idEquipement);
-    }
-    @PutMapping(value =APP_ROOT+"/equipements/update",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public Equipement updatingSociete(@RequestBody Equipement equipement) {
-        return equipementService.updateEquipement(equipement);
     }
 }

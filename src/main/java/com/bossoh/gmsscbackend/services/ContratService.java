@@ -1,20 +1,13 @@
 package com.bossoh.gmsscbackend.services;
-
-import com.bossoh.gmsscbackend.entities.Contrat;
-import com.bossoh.gmsscbackend.entities.Equipement;
-
+import com.bossoh.gmsscbackend.Dto.ContratDto;
 import java.util.List;
 
 public interface ContratService {
-    List<Contrat> listOfContrat();
+    List<ContratDto> listOfContrat();
 
-    Contrat saveContrat(Contrat contrat);
+    ContratDto saveContrat(ContratDto contrat);
 
-    Contrat updateContrat(Contrat contrat);
+    ContratDto getContratId(Long id);
 
-    Contrat getContratId(Long id);
-
-    Contrat getContratByCode(String codeContrat);
-
-    boolean deleteEquipement(Long id);
+    boolean deleteContrat(Long id);
 }

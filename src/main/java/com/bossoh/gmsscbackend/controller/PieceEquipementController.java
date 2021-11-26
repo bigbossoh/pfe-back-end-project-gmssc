@@ -1,5 +1,6 @@
 package com.bossoh.gmsscbackend.controller;
 
+import com.bossoh.gmsscbackend.Dto.PieceEquipementDto;
 import com.bossoh.gmsscbackend.entities.BienImmobilier;
 import com.bossoh.gmsscbackend.entities.PieceEquipement;
 import com.bossoh.gmsscbackend.services.impl.PieceEquipementServiceImpl;
@@ -20,20 +21,20 @@ public class PieceEquipementController {
     private final PieceEquipementServiceImpl pieceEquipementService;
 
     @GetMapping(value=APP_ROOT+"/PieceEquipements/all",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<PieceEquipement> getAllPieceEquipement(){
+    public List<PieceEquipementDto> getAllPieceEquipement(){
         return pieceEquipementService.listOfPieceEquipement();
     }
 
 
     @GetMapping(value=APP_ROOT+"/PieceEquipements/{IdPieceEqpt}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public PieceEquipement getPieceEquipementByID(@PathVariable("IdPieceEqpt") Long IdPieceEqpt) {
+    public PieceEquipementDto getPieceEquipementByID(@PathVariable("IdPieceEqpt") Long IdPieceEqpt) {
         return pieceEquipementService.getPieceEquipementyId(IdPieceEqpt);
     }
 
     @PostMapping(value =APP_ROOT+"/PieceEquipements/savePieceEquipement",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public PieceEquipement savePieceEquipement(@RequestBody  PieceEquipement pieceEquipement) {
+    public PieceEquipementDto savePieceEquipement(@RequestBody  PieceEquipementDto pieceEquipement) {
 
         return pieceEquipementService.savePieceEquipement(pieceEquipement);
     }
@@ -44,10 +45,4 @@ public class PieceEquipementController {
         return pieceEquipementService.deletePieceEquipement(IdPieceEqpt);
     }
 
-    @PutMapping(value =APP_ROOT+"/PieceEquipements/update",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public PieceEquipement updatingPieceEquipement(@RequestBody PieceEquipement pieceEqpt){
-        return pieceEquipementService.updatePieceEquipement(pieceEqpt);
-    }
 }
