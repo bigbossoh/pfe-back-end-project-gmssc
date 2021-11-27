@@ -6,7 +6,7 @@ import com.bossoh.gmsscbackend.entities.Equipement;
 import com.bossoh.gmsscbackend.entities.Pieces;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
-import com.bossoh.gmsscbackend.exceptions.InvalidEntityExeception;
+import com.bossoh.gmsscbackend.exceptions.InvalidEntityException;
 import com.bossoh.gmsscbackend.repositories.EquipementRepository;
 import com.bossoh.gmsscbackend.repositories.PieceEquipementRepository;
 import com.bossoh.gmsscbackend.repositories.PieceRepository;
@@ -37,7 +37,7 @@ public class PieceEquipementServiceImpl implements PieceEquipementService {
         List<String> errors= PieceEquipementValidator.validator(pedto);
         if(!errors.isEmpty()){
             log.error("L'objet pieceEquipement n'est pas valide {}",errors);
-            throw new InvalidEntityExeception("Certain attributs de l'object pieceEquipement sont null.",
+            throw new InvalidEntityException("Certain attributs de l'object pieceEquipement sont null.",
                     ErrorCodes.EQUIPEMENT_PIECE_NOT_VALID,errors);
         }
         Optional<Equipement> eqpt = equipementRepository.findById(pedto.getEquipementDto().getId());
@@ -68,7 +68,7 @@ public class PieceEquipementServiceImpl implements PieceEquipementService {
         }
         return pieceEquipementRepository.findById(id)
                 .map(PieceEquipementDto::fromEntity)
-                .orElseThrow(()->new InvalidEntityExeception("Aucun bien immobilier has been found with ID "+id,
+                .orElseThrow(()->new InvalidEntityException("Aucun bien immobilier has been found with ID "+id,
                         ErrorCodes.EQUIPEMENT_PIECE_NOT_FOUND));
     }
 

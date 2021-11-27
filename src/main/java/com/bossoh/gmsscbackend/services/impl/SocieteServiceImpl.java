@@ -15,7 +15,7 @@ import com.bossoh.gmsscbackend.Validator.SocieteValidator;
 import com.bossoh.gmsscbackend.utils.UtilRandom;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
-import com.bossoh.gmsscbackend.exceptions.InvalidEntityExeception;
+import com.bossoh.gmsscbackend.exceptions.InvalidEntityException;
 import com.bossoh.gmsscbackend.repositories.SocieteRepository;
 import com.bossoh.gmsscbackend.services.SocieteService;
 
@@ -38,7 +38,7 @@ public class SocieteServiceImpl implements SocieteService {
 		List<String> errors = SocieteValidator.validate(socDto);
 
 		if (!errors.isEmpty()) {
-			throw new InvalidEntityExeception("L'objet société ou certain de ses attributs ne peut être null",
+			throw new InvalidEntityException("L'objet société ou certain de ses attributs ne peut être null",
 					ErrorCodes.SOCIETE_NOT_VALID, errors);
 		}
 		if(socDto.getId()==null){

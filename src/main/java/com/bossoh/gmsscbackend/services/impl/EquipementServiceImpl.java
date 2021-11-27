@@ -1,11 +1,9 @@
 package com.bossoh.gmsscbackend.services.impl;
 import com.bossoh.gmsscbackend.Dto.EquipementDto;
 import com.bossoh.gmsscbackend.Validator.EquipementValidor;
-import com.bossoh.gmsscbackend.entities.*;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
-import com.bossoh.gmsscbackend.exceptions.InvalidEntityExeception;
-import com.bossoh.gmsscbackend.exceptions.InvalidOperationException;
+import com.bossoh.gmsscbackend.exceptions.InvalidEntityException;
 import com.bossoh.gmsscbackend.repositories.PieceEquipementRepository;
 import com.bossoh.gmsscbackend.utils.UtilRandom;
 import com.bossoh.gmsscbackend.repositories.EquipementRepository;
@@ -36,7 +34,7 @@ public class EquipementServiceImpl implements EquipementService {
         List<String> errors= EquipementValidor.validate(equipementDto);
         if(!errors.isEmpty()){
             log.error("l'equipement n'est pas valide {}",errors);
-            throw new InvalidEntityExeception("Certain attributs de l'object equipement sont null.",
+            throw new InvalidEntityException("Certain attributs de l'object equipement sont null.",
                     ErrorCodes.EQUIPEMENT_NOT_VALID,errors);
         }
 
@@ -55,7 +53,7 @@ public class EquipementServiceImpl implements EquipementService {
         }
         return equipementRepository.findEquipementById(id)
                 .map(EquipementDto::fromEntity)
-                .orElseThrow(()->new InvalidEntityExeception("Aucun equipement has been found with ID "+id,
+                .orElseThrow(()->new InvalidEntityException("Aucun equipement has been found with ID "+id,
                         ErrorCodes.EQUIPEMENT_PIECE_NOT_FOUND));
     }
 
@@ -68,7 +66,7 @@ public class EquipementServiceImpl implements EquipementService {
         }
         return equipementRepository.findEquipementByCodeEquipement(codeEquipement)
                 .map(EquipementDto::fromEntity)
-                .orElseThrow(()->new InvalidEntityExeception("Aucun Equipement has been found with Code "+codeEquipement,
+                .orElseThrow(()->new InvalidEntityException("Aucun Equipement has been found with Code "+codeEquipement,
                         ErrorCodes.EQUIPEMENT_NOT_FOUND));
     }
 

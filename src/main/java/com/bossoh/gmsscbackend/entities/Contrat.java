@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Table
 public class Contrat extends AbstractEntity {
     private String codeContrat;
     private LocalDate dateSignature;
