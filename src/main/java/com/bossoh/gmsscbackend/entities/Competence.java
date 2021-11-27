@@ -2,9 +2,13 @@ package com.bossoh.gmsscbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Getter
 @Setter
@@ -12,13 +16,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-
-public class Roles {
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String roleName;
+public class Competence extends AbstractEntity {
+    private String descrition;
+    private String Job;
     @ManyToOne
-    @JoinColumn(name = "id_utilisateur")
-    private Utilisateur utilisateur;
+    private Utilisateur user;
 }

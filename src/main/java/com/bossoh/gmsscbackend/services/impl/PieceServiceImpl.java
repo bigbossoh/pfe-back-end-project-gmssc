@@ -4,7 +4,7 @@ import com.bossoh.gmsscbackend.Validator.PieceValidator;
 import com.bossoh.gmsscbackend.entities.BienImmobilier;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
-import com.bossoh.gmsscbackend.exceptions.InvalidEntityExeception;
+import com.bossoh.gmsscbackend.exceptions.InvalidEntityException;
 import com.bossoh.gmsscbackend.utils.UtilRandom;
 import com.bossoh.gmsscbackend.repositories.BienImmobilierRepository;
 import com.bossoh.gmsscbackend.repositories.PieceRepository;
@@ -36,7 +36,7 @@ public class PieceServiceImpl implements PieceService {
         List<String> errors = PieceValidator.validate(pieceDto);
         if (!errors.isEmpty()) {
             log.error("Le bien n'est pas valide {}", errors);
-            throw new InvalidEntityExeception("Certain attributs de l'object piece sont null.",
+            throw new InvalidEntityException("Certain attributs de l'object piece sont null.",
                     ErrorCodes.PIECE_NOT_VALID, errors);
         }
         Optional<BienImmobilier> bienDto = bienImmobilierRepository.findBienImmobilierById(pieceDto.getBienImmobilierDto().getId());
@@ -61,7 +61,7 @@ public class PieceServiceImpl implements PieceService {
         }
         return pieceRepository.findById(idDto)
                 .map(PiecesDto::fromEntity)
-                .orElseThrow(() -> new InvalidEntityExeception("Aucune piece has been found with ID " + idDto,
+                .orElseThrow(() -> new InvalidEntityException("Aucune piece has been found with ID " + idDto,
                         ErrorCodes.PIECE_NOT_FOUND));
     }
 
@@ -74,7 +74,7 @@ public class PieceServiceImpl implements PieceService {
         }
         return pieceRepository.findPieceByCodePiece(codePieceDto)
                 .map(PiecesDto::fromEntity)
-                .orElseThrow(() -> new InvalidEntityExeception("Aucune piece has been found with Code " + codePieceDto,
+                .orElseThrow(() -> new InvalidEntityException("Aucune piece has been found with Code " + codePieceDto,
                         ErrorCodes.PIECE_NOT_FOUND));
     }
 

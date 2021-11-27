@@ -1,12 +1,11 @@
 package com.bossoh.gmsscbackend.services.impl;
 
 import com.bossoh.gmsscbackend.Dto.ContratDto;
-import com.bossoh.gmsscbackend.Dto.EquipementDto;
 import com.bossoh.gmsscbackend.Validator.ContratValidator;
 import com.bossoh.gmsscbackend.entities.*;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
-import com.bossoh.gmsscbackend.exceptions.InvalidEntityExeception;
+import com.bossoh.gmsscbackend.exceptions.InvalidEntityException;
 import com.bossoh.gmsscbackend.exceptions.InvalidOperationException;
 import com.bossoh.gmsscbackend.repositories.ContratRepository;
 import com.bossoh.gmsscbackend.repositories.EquipementRepository;
@@ -39,7 +38,7 @@ public class ContratServiceImpl implements ContratService {
         List<String> errors = ContratValidator.Validate(contrat);
         if (!errors.isEmpty()) {
             log.error("le contrat n'est pas valide {}", errors);
-            throw new InvalidEntityExeception("Certain attributs de l'object contrat sont null.",
+            throw new InvalidEntityException("Certain attributs de l'object contrat sont null.",
                     ErrorCodes.CONTRAT_NOT_VALID, errors);
         }
         Optional<Societe> contratsoc = societeRepository.findById(contrat.getSocieteDto().getId());
@@ -71,7 +70,7 @@ public class ContratServiceImpl implements ContratService {
 
         if (!equipementErrors.isEmpty()) {
             log.warn("");
-            throw new InvalidEntityExeception("Equipement n'existe pas dans la BDD", ErrorCodes.EQUIPEMENT_NOT_FOUND, equipementErrors);
+            throw new InvalidEntityException("Equipement n'existe pas dans la BDD", ErrorCodes.EQUIPEMENT_NOT_FOUND, equipementErrors);
         }
         if (contrat.getEquipementDtos() != null) {
             contrat.getEquipementDtos().forEach(ligEqpt -> {
@@ -82,7 +81,7 @@ public class ContratServiceImpl implements ContratService {
                     Equipement savedEqpt = equipementRepository.save(equiptCharge);
                 }else
                 {
-                    throw new InvalidEntityExeception("L'objet equipement possede certains de ses attributs null",
+                    throw new InvalidEntityException("L'objet equipement possede certains de ses attributs null",
                             ErrorCodes.SOCIETE_NOT_FOUND);
                 }
             });
@@ -100,7 +99,7 @@ public class ContratServiceImpl implements ContratService {
         }
         return contratRepository.findContratById(id)
                 .map(ContratDto::fromEntity)
-                .orElseThrow(() -> new InvalidEntityExeception("Aucun bien immobilier has been found with ID " + id,
+                .orElseThrow(() -> new InvalidEntityException("Aucun bien immobilier has been found with ID " + id,
                         ErrorCodes.CONTRAT_NOT_FOUND));
     }
 

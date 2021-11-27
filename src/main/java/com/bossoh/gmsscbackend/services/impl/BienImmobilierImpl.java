@@ -10,7 +10,7 @@ import com.bossoh.gmsscbackend.entities.BienImmobilier;
 import com.bossoh.gmsscbackend.entities.Societe;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
-import com.bossoh.gmsscbackend.exceptions.InvalidEntityExeception;
+import com.bossoh.gmsscbackend.exceptions.InvalidEntityException;
 import com.bossoh.gmsscbackend.repositories.BienImmobilierRepository;
 import com.bossoh.gmsscbackend.repositories.SocieteRepository;
 import com.bossoh.gmsscbackend.services.BienImmobilierService;
@@ -40,7 +40,7 @@ public class BienImmobilierImpl implements BienImmobilierService {
         List<String> errors= BienImmobilierValidator.validate(bienDto);
         if(!errors.isEmpty()){
             log.error("le bien immobilier n'est pas valide {}",errors);
-            throw new InvalidEntityExeception("Certain attributs de l'object bien immobilier sont null.",
+            throw new InvalidEntityException("Certain attributs de l'object bien immobilier sont null.",
                     ErrorCodes.BIEN_IMMOBILIER_NOT_VALID,errors);
         }
         Optional<Societe> soc = societeRepository.findById(bienDto.getSocieteDto().getId());
@@ -65,7 +65,7 @@ public class BienImmobilierImpl implements BienImmobilierService {
         }
         return bienImmobilierRepository.findBienImmobilierById(idDto)
                 .map(BienImmobilierDto::fromEntity)
-                .orElseThrow(()->new InvalidEntityExeception("Aucun bien immobilier has been found with ID "+idDto,
+                .orElseThrow(()->new InvalidEntityException("Aucun bien immobilier has been found with ID "+idDto,
                         ErrorCodes.BIEN_IMMOBILIER_NOT_FOUND));
     }
 
@@ -78,7 +78,7 @@ public class BienImmobilierImpl implements BienImmobilierService {
         }
         return bienImmobilierRepository.findBienImmobilierByCodeBienImmobilier(codeBienDto)
                 .map(BienImmobilierDto::fromEntity)
-                .orElseThrow(()->new InvalidEntityExeception("Aucun bien immobilier has been found with Code "+codeBienDto,
+                .orElseThrow(()->new InvalidEntityException("Aucun bien immobilier has been found with Code "+codeBienDto,
                         ErrorCodes.SOCIETE_NOT_FOUND));
     }
 
