@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.bossoh.gmsscbackend.utils.Constants.APP_ROOT;
 @RestController
-@Api(APP_ROOT+"/Competence")
+@Api(APP_ROOT+"/Competences")
 @RequiredArgsConstructor
 public class CompetenceController {
 

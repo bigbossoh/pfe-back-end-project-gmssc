@@ -15,6 +15,7 @@ import static com.bossoh.gmsscbackend.utils.Constants.APP_ROOT;
 @Api(APP_ROOT+"/contrats")
 @RequiredArgsConstructor
 public class ContratController {
+
     private final ContratServiceImpl contratService;
     @GetMapping(value=APP_ROOT+"/contrats/all",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ContratDto> getAllContrat(){

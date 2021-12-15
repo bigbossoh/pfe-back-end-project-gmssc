@@ -1,5 +1,6 @@
 package com.bossoh.gmsscbackend.services.impl;
 
+import com.bossoh.gmsscbackend.Dto.BienImmobilierDto;
 import com.bossoh.gmsscbackend.Dto.ContratDto;
 import com.bossoh.gmsscbackend.Validator.ContratValidator;
 import com.bossoh.gmsscbackend.entities.*;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -132,6 +134,11 @@ public class ContratServiceImpl implements ContratService {
 
     @Override
     public List<ContratDto> listOfContrat() {
-        return null;
+        log.info("We are going to take back all the contrats");
+
+        return contratRepository.findAll().stream()
+                .map(ContratDto::fromEntity)
+                .collect(Collectors.toList());
+
     }
 }
