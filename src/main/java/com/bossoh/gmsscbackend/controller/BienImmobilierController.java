@@ -1,7 +1,7 @@
 package com.bossoh.gmsscbackend.controller;
 
 import com.bossoh.gmsscbackend.Dto.BienImmobilierDto;
-import com.bossoh.gmsscbackend.services.impl.BienImmobilierImpl;
+import com.bossoh.gmsscbackend.services.impl.BienImmobilierServiceImpl;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -16,7 +16,7 @@ import static com.bossoh.gmsscbackend.utils.Constants.APP_ROOT;
 @RequiredArgsConstructor
 public class BienImmobilierController {
 
-    private  final BienImmobilierImpl bienImmobilierImpl;
+    private  final BienImmobilierServiceImpl bienImmobilierImpl;
 
     @GetMapping(value=APP_ROOT+"/biens/all",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BienImmobilierDto> getAllBien(){

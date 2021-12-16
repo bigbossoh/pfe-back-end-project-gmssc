@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Transactional
 @Slf4j
 @RequiredArgsConstructor
-public class BienImmobilierImpl implements BienImmobilierService {
+public class BienImmobilierServiceImpl implements BienImmobilierService {
     private final BienImmobilierRepository bienImmobilierRepository;
     private final SocieteRepository societeRepository;
     private final PieceRepository pieceRepository;
