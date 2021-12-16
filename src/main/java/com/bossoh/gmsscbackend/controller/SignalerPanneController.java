@@ -17,7 +17,7 @@ public class SignalerPanneController {
     private final SignalerPanneServiceImpl signalerPanneService;
 
     @GetMapping(value=APP_ROOT+"/signaler-panne/all",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<SignalerPanneDto> getAllContrat(){
+    public List<SignalerPanneDto> getAllSignalerPanne(){
         return signalerPanneService.listOfSignalerPanne();
     }
 
@@ -26,7 +26,7 @@ public class SignalerPanneController {
         return signalerPanneService.getSignalerPanneId(IdPanne);
     }
 
-    @PostMapping(value =APP_ROOT+"/signaler-panne/savecontrat",
+    @PostMapping(value =APP_ROOT+"/signaler-panne/savesignalerpanne",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public SignalerPanneDto saveSignalerPanne(@RequestBody SignalerPanneDto signalerPanneDto) {
@@ -36,7 +36,7 @@ public class SignalerPanneController {
 
     @DeleteMapping(value = APP_ROOT+"/signaler-panne/delete/{IdPanne}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public boolean deleteBienById(@PathVariable("IdPanne") Long IdPanne) {
+    public boolean deleteSignalerPanneById(@PathVariable("IdPanne") Long IdPanne) {
         return signalerPanneService.deleteSignalerPanne(IdPanne);
     }
 }
