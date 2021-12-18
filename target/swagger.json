@@ -13,13 +13,27 @@
   "tags" : [ {
     "name" : "gmsscapiv1biens"
   }, {
+    "name" : "gmsscapiv1Competences"
+  }, {
+    "name" : "gmsscapiv1contrats"
+  }, {
     "name" : "gmsscapiv1equipements"
+  }, {
+    "name" : "gmsscapiv1groupe-intervenant"
+  }, {
+    "name" : "gmsscapiv1interventioncorrective"
+  }, {
+    "name" : "gmsscapiv1interventionpreventive"
   }, {
     "name" : "gmsscapiv1PieceEquipements"
   }, {
     "name" : "gmsscapiv1pieces"
   }, {
+    "name" : "gmsscapiv1signaler-panne"
+  }, {
     "name" : "gmsscapiv1societes"
+  }, {
+    "name" : "gmsscapiv1utilisateurGroupeIntervenant"
   } ],
   "paths" : {
     "/gmssc/api/v1/PieceEquipements/all" : {
@@ -33,7 +47,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/PieceEquipement"
+                "$ref" : "#/definitions/PieceEquipementDto"
               }
             }
           }
@@ -73,38 +87,14 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/PieceEquipement"
+            "$ref" : "#/definitions/PieceEquipementDto"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/PieceEquipement"
-            }
-          }
-        }
-      }
-    },
-    "/gmssc/api/v1/PieceEquipements/update" : {
-      "put" : {
-        "tags" : [ "gmsscapiv1PieceEquipements" ],
-        "operationId" : "updatingPieceEquipement",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/PieceEquipement"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/PieceEquipement"
+              "$ref" : "#/definitions/PieceEquipementDto"
             }
           }
         }
@@ -126,7 +116,29 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/PieceEquipement"
+              "$ref" : "#/definitions/PieceEquipementDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/UtilisateurGroupeIntervenant/delete/{IduserGrpeInterv}" : {
+      "delete" : {
+        "tags" : [ "gmsscapiv1utilisateurGroupeIntervenant" ],
+        "operationId" : "deleteUtilisateurGroupeIntervenantById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IduserGrpeInterv",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "boolean"
             }
           }
         }
@@ -143,7 +155,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/BienImmobilier"
+                "$ref" : "#/definitions/BienImmobilierDto"
               }
             }
           }
@@ -175,7 +187,7 @@
     "/gmssc/api/v1/biens/getbien/{codebien}" : {
       "get" : {
         "tags" : [ "gmsscapiv1biens" ],
-        "operationId" : "getBienByID",
+        "operationId" : "getBienByCode",
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "codebien",
@@ -187,7 +199,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/BienImmobilier"
+              "$ref" : "#/definitions/BienImmobilierDto"
             }
           }
         }
@@ -204,38 +216,14 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/BienImmobilier"
+            "$ref" : "#/definitions/BienImmobilierDto"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/BienImmobilier"
-            }
-          }
-        }
-      }
-    },
-    "/gmssc/api/v1/biens/update" : {
-      "put" : {
-        "tags" : [ "gmsscapiv1biens" ],
-        "operationId" : "updatingBienImmobilier",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/BienImmobilier"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/BienImmobilier"
+              "$ref" : "#/definitions/BienImmobilierDto"
             }
           }
         }
@@ -257,7 +245,179 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/BienImmobilier"
+              "$ref" : "#/definitions/BienImmobilierDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/competences/all" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1Competences" ],
+        "operationId" : "getAllCompetence",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/CompetenceDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/competences/delete/{IdCompetences}" : {
+      "delete" : {
+        "tags" : [ "gmsscapiv1Competences" ],
+        "operationId" : "deleteCompetencesById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdCompetences",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/competences/savecompetences" : {
+      "post" : {
+        "tags" : [ "gmsscapiv1Competences" ],
+        "operationId" : "saveCompetence",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CompetenceDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CompetenceDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/competences/{IdCompetences}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1Competences" ],
+        "operationId" : "getCompetenceByID",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdCompetences",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CompetenceDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/contrats/all" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1contrats" ],
+        "operationId" : "getAllContrat",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ContratDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/contrats/delete/{Idcontrats}" : {
+      "delete" : {
+        "tags" : [ "gmsscapiv1contrats" ],
+        "operationId" : "deleteBienById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Idcontrats",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/contrats/savecontrat" : {
+      "post" : {
+        "tags" : [ "gmsscapiv1contrats" ],
+        "operationId" : "saveContrat",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ContratDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ContratDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/contrats/{IdContrat}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1contrats" ],
+        "operationId" : "getContratByID",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdContrat",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ContratDto"
             }
           }
         }
@@ -274,7 +434,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Equipement"
+                "$ref" : "#/definitions/EquipementDto"
               }
             }
           }
@@ -318,7 +478,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Equipement"
+              "$ref" : "#/definitions/EquipementDto"
             }
           }
         }
@@ -335,38 +495,14 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/Equipement"
+            "$ref" : "#/definitions/EquipementDto"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Equipement"
-            }
-          }
-        }
-      }
-    },
-    "/gmssc/api/v1/equipements/update" : {
-      "put" : {
-        "tags" : [ "gmsscapiv1equipements" ],
-        "operationId" : "updatingSociete",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/Equipement"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Equipement"
+              "$ref" : "#/definitions/EquipementDto"
             }
           }
         }
@@ -388,7 +524,265 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Equipement"
+              "$ref" : "#/definitions/EquipementDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/groupe-intervenant/all" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1groupe-intervenant" ],
+        "operationId" : "getGroupeIntervenant",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/GroupeIntervenantDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/groupe-intervenant/delete/{IdgrpInterv}" : {
+      "delete" : {
+        "tags" : [ "gmsscapiv1groupe-intervenant" ],
+        "operationId" : "deleteGroupeIntervenantById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdgrpInterv",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/groupe-intervenant/savegrpeIntervenant" : {
+      "post" : {
+        "tags" : [ "gmsscapiv1groupe-intervenant" ],
+        "operationId" : "saveGroupeIntervenant",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/GroupeIntervenantDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/GroupeIntervenantDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/groupe-intervenant/{IdgrpInterv}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1groupe-intervenant" ],
+        "operationId" : "getSignalerPanneDto",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdgrpInterv",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/GroupeIntervenantDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/intervention/corrective/all" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1interventioncorrective" ],
+        "operationId" : "getAllCorrective",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/CorrectiveDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/intervention/corrective/delete/{IdCorrective}" : {
+      "delete" : {
+        "tags" : [ "gmsscapiv1interventioncorrective" ],
+        "operationId" : "deleteBienById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdCorrective",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/intervention/corrective/savecorrective" : {
+      "post" : {
+        "tags" : [ "gmsscapiv1interventioncorrective" ],
+        "operationId" : "saveCorrective",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CorrectiveDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CorrectiveDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/intervention/corrective/{IdCorrective}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1interventioncorrective" ],
+        "operationId" : "getCorrectiveByID",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdCorrective",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CorrectiveDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/intervention/preventive/all" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1interventionpreventive" ],
+        "operationId" : "getAllPreventive",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/PreventiveDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/intervention/preventive/delete/{IdPreventive}" : {
+      "delete" : {
+        "tags" : [ "gmsscapiv1interventionpreventive" ],
+        "operationId" : "deletePreventiveById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdPreventive",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/intervention/preventive/savepreventive" : {
+      "post" : {
+        "tags" : [ "gmsscapiv1interventionpreventive" ],
+        "operationId" : "savePreventive",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/PreventiveDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PreventiveDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/intervention/preventive/{IdPreventive}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1interventionpreventive" ],
+        "operationId" : "getPreventiveByID",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdPreventive",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PreventiveDto"
             }
           }
         }
@@ -405,7 +799,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Pieces"
+                "$ref" : "#/definitions/PiecesDto"
               }
             }
           }
@@ -434,10 +828,10 @@
         }
       }
     },
-    "/gmssc/api/v1/pieces/getPiece/{codebien}" : {
+    "/gmssc/api/v1/pieces/getPiece/{codePiece}" : {
       "get" : {
         "tags" : [ "gmsscapiv1pieces" ],
-        "operationId" : "getPieceByID",
+        "operationId" : "getPieceByCodePiece",
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "CodePiece",
@@ -449,7 +843,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Pieces"
+              "$ref" : "#/definitions/PiecesDto"
             }
           }
         }
@@ -466,38 +860,14 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/Pieces"
+            "$ref" : "#/definitions/PiecesDto"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Pieces"
-            }
-          }
-        }
-      }
-    },
-    "/gmssc/api/v1/pieces/update" : {
-      "put" : {
-        "tags" : [ "gmsscapiv1pieces" ],
-        "operationId" : "updatingSociete",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/Pieces"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Pieces"
+              "$ref" : "#/definitions/PiecesDto"
             }
           }
         }
@@ -519,7 +889,93 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Pieces"
+              "$ref" : "#/definitions/PiecesDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/signaler-panne/all" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1signaler-panne" ],
+        "operationId" : "getAllSignalerPanne",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SignalerPanneDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/signaler-panne/delete/{IdPanne}" : {
+      "delete" : {
+        "tags" : [ "gmsscapiv1signaler-panne" ],
+        "operationId" : "deleteSignalerPanneById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdPanne",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/signaler-panne/savesignalerpanne" : {
+      "post" : {
+        "tags" : [ "gmsscapiv1signaler-panne" ],
+        "operationId" : "saveSignalerPanne",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SignalerPanneDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SignalerPanneDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/signaler-panne/{IdPanne}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1signaler-panne" ],
+        "operationId" : "getSignalerPanneDto",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdPanne",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SignalerPanneDto"
             }
           }
         }
@@ -536,7 +992,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Societe"
+                "$ref" : "#/definitions/SocieteDto"
               }
             }
           }
@@ -576,38 +1032,14 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/Societe"
+            "$ref" : "#/definitions/SocieteDto"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Societe"
-            }
-          }
-        }
-      }
-    },
-    "/gmssc/api/v1/societes/update" : {
-      "put" : {
-        "tags" : [ "gmsscapiv1societes" ],
-        "operationId" : "updatingSociete",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/Societe"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/Societe"
+              "$ref" : "#/definitions/SocieteDto"
             }
           }
         }
@@ -629,7 +1061,71 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Societe"
+              "$ref" : "#/definitions/SocieteDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/utilisateurGroupeIntervenant/all" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1utilisateurGroupeIntervenant" ],
+        "operationId" : "getAllUtilisateurGroupeIntervenant",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/UtilisateurGroupeIntervenantDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/utilisateurGroupeIntervenant/saveusergroupeintervenant" : {
+      "post" : {
+        "tags" : [ "gmsscapiv1utilisateurGroupeIntervenant" ],
+        "operationId" : "saveUtilisateurGroupeIntervenant",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UtilisateurGroupeIntervenantDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/UtilisateurGroupeIntervenantDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/utilisateurGroupeIntervenant/{IduserGrpeInterv}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1utilisateurGroupeIntervenant" ],
+        "operationId" : "getUtilisateurGroupeIntervenantByID",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IduserGrpeInterv",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/UtilisateurGroupeIntervenantDto"
             }
           }
         }
@@ -637,7 +1133,7 @@
     }
   },
   "definitions" : {
-    "Adresse" : {
+    "AdresseDto" : {
       "type" : "object",
       "properties" : {
         "pays" : {
@@ -660,7 +1156,7 @@
         }
       }
     },
-    "BienImmobilier" : {
+    "BienImmobilierDto" : {
       "type" : "object",
       "properties" : {
         "id" : {
@@ -680,18 +1176,6 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "pays" : {
-          "type" : "string"
-        },
-        "ville" : {
-          "type" : "string"
-        },
-        "rue" : {
-          "type" : "string"
-        },
-        "adresse" : {
-          "type" : "string"
-        },
         "mobile" : {
           "type" : "string"
         },
@@ -705,18 +1189,162 @@
           "type" : "integer",
           "format" : "int32"
         },
-        "societe" : {
-          "$ref" : "#/definitions/Societe"
+        "societeDto" : {
+          "$ref" : "#/definitions/SocieteDto"
         },
-        "pieces" : {
+        "adresses2" : {
+          "type" : "string"
+        },
+        "adresses1" : {
+          "type" : "string"
+        }
+      }
+    },
+    "CompetenceDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "descrition" : {
+          "type" : "string"
+        },
+        "job" : {
+          "type" : "string"
+        },
+        "userDto" : {
+          "$ref" : "#/definitions/UtilisateurDto"
+        }
+      }
+    },
+    "ContratDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "codeContrat" : {
+          "type" : "string"
+        },
+        "dateSignature" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "dureeContrat" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "dateFin" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "contactUrgence" : {
+          "type" : "string"
+        },
+        "delaiIntervention" : {
+          "type" : "string"
+        },
+        "resiliation" : {
+          "type" : "boolean"
+        },
+        "verificationControleGeneral" : {
+          "type" : "boolean"
+        },
+        "verificationFixationsSupports" : {
+          "type" : "boolean"
+        },
+        "verificationCircuitFrigorifique" : {
+          "type" : "boolean"
+        },
+        "detectionFuitesEventuelles" : {
+          "type" : "boolean"
+        },
+        "verificationBonneMarcheSecurites" : {
+          "type" : "boolean"
+        },
+        "nettoyageFiltre" : {
+          "type" : "boolean"
+        },
+        "depoussierageNettoyageUnites" : {
+          "type" : "boolean"
+        },
+        "verificationEcoulementEaux" : {
+          "type" : "boolean"
+        },
+        "desinfectionNettoyageBacs" : {
+          "type" : "boolean"
+        },
+        "nettoyageEnlevementResidus" : {
+          "type" : "boolean"
+        },
+        "etablissementRapportVisite" : {
+          "type" : "boolean"
+        },
+        "risquesEventuels" : {
+          "type" : "boolean"
+        },
+        "coutInterventionsInclus" : {
+          "type" : "boolean"
+        },
+        "coutInterventionsExclus" : {
+          "type" : "boolean"
+        },
+        "coutInterventionsFacture" : {
+          "type" : "boolean"
+        },
+        "societeDto" : {
+          "$ref" : "#/definitions/SocieteDto"
+        },
+        "equipementDtos" : {
           "type" : "array",
           "items" : {
-            "$ref" : "#/definitions/Pieces"
+            "$ref" : "#/definitions/EquipementDto"
           }
         }
       }
     },
-    "Equipement" : {
+    "CorrectiveDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "actionsMener" : {
+          "type" : "string"
+        },
+        "reparation" : {
+          "type" : "boolean"
+        },
+        "depannage" : {
+          "type" : "boolean"
+        },
+        "coutMaintenance" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "dateDebutIntervention" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "dateFinIntervention" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "resolu" : {
+          "type" : "boolean"
+        },
+        "rapportInterv" : {
+          "type" : "boolean"
+        },
+        "groupeIntervenantDto" : {
+          "$ref" : "#/definitions/GroupeIntervenantDto"
+        }
+      }
+    },
+    "EquipementDto" : {
       "type" : "object",
       "properties" : {
         "id" : {
@@ -755,8 +1383,8 @@
           "type" : "string"
         },
         "dateAchat" : {
-          "type" : "string",
-          "format" : "date"
+          "type" : "integer",
+          "format" : "int64"
         },
         "garantie" : {
           "type" : "integer",
@@ -783,11 +1411,8 @@
         "typeClim" : {
           "type" : "string"
         },
-        "pieceEquipements" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/PieceEquipement"
-          }
+        "contratDto" : {
+          "$ref" : "#/definitions/ContratDto"
         },
         "longueur" : {
           "type" : "number",
@@ -795,26 +1420,49 @@
         }
       }
     },
-    "PieceEquipement" : {
+    "GroupeIntervenantDto" : {
       "type" : "object",
       "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "dateAffectation" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "commentaire" : {
+          "type" : "string"
+        },
+        "signalerPanneDto" : {
+          "$ref" : "#/definitions/SignalerPanneDto"
+        },
+        "dateFinTravaux" : {
+          "type" : "string",
+          "format" : "date"
+        }
+      }
+    },
+    "PieceEquipementDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
         "dateInstallation" : {
           "type" : "string",
           "format" : "date"
         },
-        "equipement" : {
-          "$ref" : "#/definitions/Equipement"
+        "equipementDto" : {
+          "$ref" : "#/definitions/EquipementDto"
         },
-        "pieces" : {
-          "$ref" : "#/definitions/Pieces"
-        },
-        "id" : {
-          "type" : "integer",
-          "format" : "int64"
+        "piecesDto" : {
+          "$ref" : "#/definitions/PiecesDto"
         }
       }
     },
-    "Pieces" : {
+    "PiecesDto" : {
       "type" : "object",
       "properties" : {
         "id" : {
@@ -844,18 +1492,98 @@
         "typeSalle" : {
           "type" : "string"
         },
-        "bienImmobilier" : {
-          "$ref" : "#/definitions/BienImmobilier"
-        },
-        "pieceEquipements" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/PieceEquipement"
-          }
+        "bienImmobilierDto" : {
+          "$ref" : "#/definitions/BienImmobilierDto"
         }
       }
     },
-    "Societe" : {
+    "PreventiveDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "programmer" : {
+          "type" : "boolean"
+        },
+        "periodique" : {
+          "type" : "boolean"
+        },
+        "dateDebutIntervention" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "dateFinIntervention" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "resolu" : {
+          "type" : "boolean"
+        },
+        "rapportInterv" : {
+          "type" : "boolean"
+        },
+        "groupeIntervenantDto" : {
+          "$ref" : "#/definitions/GroupeIntervenantDto"
+        }
+      }
+    },
+    "RolesDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "roleName" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SignalerPanneDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "codeSignalerPanne" : {
+          "type" : "string"
+        },
+        "objetPanne" : {
+          "type" : "string"
+        },
+        "descriptionPanne" : {
+          "type" : "string"
+        },
+        "dateSignalerPanne" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "dateResolutionPanne" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "dateAnnulation" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "etatSignalerPanne" : {
+          "type" : "string"
+        },
+        "causeAnnulation" : {
+          "type" : "string"
+        },
+        "utilisateurDto" : {
+          "$ref" : "#/definitions/UtilisateurDto"
+        },
+        "piecesDto" : {
+          "$ref" : "#/definitions/PiecesDto"
+        }
+      }
+    },
+    "SocieteDto" : {
       "type" : "object",
       "properties" : {
         "id" : {
@@ -872,14 +1600,11 @@
           "type" : "string"
         },
         "dateCreationSociete" : {
-          "type" : "string",
-          "format" : "date"
+          "type" : "integer",
+          "format" : "int64"
         },
         "descriptionActivite" : {
           "type" : "string"
-        },
-        "adresse" : {
-          "$ref" : "#/definitions/Adresse"
         },
         "codeFiscal" : {
           "type" : "string"
@@ -899,14 +1624,67 @@
         "fax" : {
           "type" : "string"
         },
-        "steWeb" : {
+        "siteWeb" : {
           "type" : "string"
         },
-        "bienImmobiliers" : {
+        "adresse" : {
+          "$ref" : "#/definitions/AdresseDto"
+        }
+      }
+    },
+    "UtilisateurDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "nom" : {
+          "type" : "string"
+        },
+        "prenom" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "dateDeNaissance" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "moteDePasse" : {
+          "type" : "string"
+        },
+        "adresseDto" : {
+          "$ref" : "#/definitions/AdresseDto"
+        },
+        "photo" : {
+          "type" : "string"
+        },
+        "roles" : {
           "type" : "array",
           "items" : {
-            "$ref" : "#/definitions/BienImmobilier"
+            "$ref" : "#/definitions/RolesDto"
           }
+        }
+      }
+    },
+    "UtilisateurGroupeIntervenantDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "dateAffectionUser" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "groupeIntervenantDto" : {
+          "$ref" : "#/definitions/GroupeIntervenantDto"
+        },
+        "utilisateurDto" : {
+          "$ref" : "#/definitions/UtilisateurDto"
         }
       }
     }

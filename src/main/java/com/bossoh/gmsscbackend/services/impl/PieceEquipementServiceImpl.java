@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class PieceEquipementServiceImpl implements PieceEquipementService {
+
     private final PieceEquipementRepository pieceEquipementRepository;
     private final PieceRepository pieceRepository;
     private final EquipementRepository equipementRepository;
