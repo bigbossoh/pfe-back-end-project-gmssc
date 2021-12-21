@@ -6,18 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class GmsscbackendApplication implements CommandLineRunner
-{
+public class GmsscbackendApplication implements CommandLineRunner {
 //	private final GssmcInit gssmcInit;
 //	@Autowired
 //	public GmsscbackendApplication(GssmcInit gssmcInit) {
 //		this.gssmcInit = gssmcInit;
 //	}
-
+//@Bean
+//public PasswordEncoder passwordEncoder() {
+//	return new BCryptPasswordEncoder();
+//}
 	public static void main(String[] args) {
 		SpringApplication.run(GmsscbackendApplication.class, args);
 	}
@@ -29,5 +34,9 @@ public class GmsscbackendApplication implements CommandLineRunner
 //		gssmcInit.initPiece();
 //		gssmcInit.initEquipement();
 //		gssmcInit.initPieceEquipement();
+	}
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }

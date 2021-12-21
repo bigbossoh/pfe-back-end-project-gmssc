@@ -12,11 +12,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Utilisateur {
+public class Utilisateur extends AbstractEntity {
 
-    @Id
-    @GeneratedValue
-    private Long id;
     private String nom;
     private String prenom;
     private String email;

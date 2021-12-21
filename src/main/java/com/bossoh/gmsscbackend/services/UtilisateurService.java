@@ -12,7 +12,7 @@ public interface UtilisateurService {
 
     UtilisateurDto findById(Long id);
 
-    List<UtilisateurDto> findAll();
+    List<UtilisateurDto> listOfUtilisateur();
 
     void delete(Long id);
 
