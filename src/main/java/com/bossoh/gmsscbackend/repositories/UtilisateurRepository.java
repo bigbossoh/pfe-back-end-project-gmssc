@@ -16,4 +16,5 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long> {
     Optional<Utilisateur> findUtilisateurByEmail(@Param("email") String email);
     Optional<Utilisateur> findUtilisateurById(Long id);
     Optional<Utilisateur> findById(Long Id);
+    Optional<Utilisateur> findByEmail(String email);
 }

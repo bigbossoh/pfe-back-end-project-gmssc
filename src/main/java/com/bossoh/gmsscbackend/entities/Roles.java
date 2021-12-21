@@ -13,10 +13,8 @@ import javax.persistence.*;
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 
-public class Roles {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Roles extends AbstractEntity {
+
     private String roleName;
     @ManyToOne
     @JoinColumn(name = "id_utilisateur")
