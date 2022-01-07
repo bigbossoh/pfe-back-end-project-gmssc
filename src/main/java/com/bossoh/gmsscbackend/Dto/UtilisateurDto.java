@@ -2,7 +2,7 @@ package com.bossoh.gmsscbackend.Dto;
 import com.bossoh.gmsscbackend.entities.Utilisateur;
 import lombok.Builder;
 import lombok.Data;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +14,7 @@ public class UtilisateurDto {
     private String nom;
     private String prenom;
     private String email;
-    private Instant dateDeNaissance;
+    private LocalDate dateDeNaissance;
     private String moteDePasse;
     private AdresseDto adresseDto;
     private String photo;

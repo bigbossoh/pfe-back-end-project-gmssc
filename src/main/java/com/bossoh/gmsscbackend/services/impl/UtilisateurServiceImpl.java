@@ -1,18 +1,21 @@
 package com.bossoh.gmsscbackend.services.impl;
 
 import com.bossoh.gmsscbackend.Dto.ChangerMotDePasseUtilisateurDto;
+import com.bossoh.gmsscbackend.Dto.RolesDto;
 import com.bossoh.gmsscbackend.Dto.UtilisateurDto;
 import com.bossoh.gmsscbackend.Validator.UtilisateurValidator;
+
+import com.bossoh.gmsscbackend.entities.Roles;
 import com.bossoh.gmsscbackend.entities.Utilisateur;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
 import com.bossoh.gmsscbackend.exceptions.InvalidEntityException;
 import com.bossoh.gmsscbackend.exceptions.InvalidOperationException;
+import com.bossoh.gmsscbackend.repositories.RolesRepository;
 import com.bossoh.gmsscbackend.repositories.UtilisateurRepository;
 import com.bossoh.gmsscbackend.services.UtilisateurService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,7 @@ import java.util.stream.Collectors;
 public class UtilisateurServiceImpl implements UtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
+    private final RolesRepository rolesRepository;
     public final PasswordEncoder passwordEncoderUser;
 
 
@@ -46,12 +50,41 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                     Collections.singletonList("Un autre utilisateur avec le meme email existe deja dans la BDD"));
         }
         dto.setMoteDePasse(passwordEncoderUser.encode(dto.getMoteDePasse()));
+        Utilisateur userRole=utilisateurRepository.save(UtilisateurDto.toEntity(dto));
+        System.out.println(userRole.getRoles());
+        UtilisateurDto saveUserDto =UtilisateurDto.fromEntity(userRole);
 
-        return UtilisateurDto.fromEntity(
-                utilisateurRepository.save(
-                        UtilisateurDto.toEntity(dto)
-                )
-        );
+        List<Roles> Listroles=rolesRepository.findAll();
+        if (Listroles.isEmpty()){
+            log.info("we are roles table is empty");
+            RolesDto rolesDto = RolesDto.builder()
+                    .roleName("ADMIN")
+                    .utilisateur(saveUserDto)
+                    .build();
+            rolesRepository.save(RolesDto.toEntity(rolesDto));
+        }
+        log.info("we are roles table is not empty");
+        RolesDto rolesDto = RolesDto.builder()
+                .roleName("USER")
+                .utilisateur(saveUserDto)
+                .build();
+        rolesRepository.save(RolesDto.toEntity(rolesDto));
+
+//        Optional<Utilisateur> userUpdateRole=utilisateurRepository.findById(saveUserDto.getId());
+//        if(userUpdateRole.isPresent()){
+//            Utilisateur utilisateur=userUpdateRole.get();
+//            utilisateur.setRoles();
+//            Utilisateur savedUtilisateur = utilisateurRepository.save(utilisateur);
+//            return UtilisateurDto.fromEntity(savedUtilisateur);
+//           // return saveUserDtos;
+//        }else
+//        {
+//            throw new InvalidEntityException("L'objet Utilisateur possede certains de ses attributs null",
+//                    ErrorCodes.UTILISATEUR_NOT_FOUND);
+//        }
+
+       return saveUserDto;
+
     }
 
     @Override
@@ -108,10 +141,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
         Utilisateur utilisateur = utilisateurOptional.get();
         utilisateur.setMoteDePasse(passwordEncoderUser.encode(dto.getMotDePasse()));
+        return UtilisateurDto.fromEntity(utilisateurRepository.save(utilisateur));
+       // return saveUserDto;
 
-        return UtilisateurDto.fromEntity(
-                utilisateurRepository.save(utilisateur)
-        );
+
     }
 
     private boolean userAlreadyExists(String email) {
