@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
@@ -17,7 +17,7 @@ public class Utilisateur extends AbstractEntity {
     private String nom;
     private String prenom;
     private String email;
-    private Instant dateDeNaissance;
+    private LocalDate dateDeNaissance;
     private String moteDePasse;
     @Embedded
     private Adresse adresse;

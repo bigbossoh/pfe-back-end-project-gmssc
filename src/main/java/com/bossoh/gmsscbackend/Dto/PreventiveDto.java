@@ -10,6 +10,8 @@ import java.time.LocalDate;
 public class PreventiveDto {
     private Long id;
     private Boolean programmer;
+    private LocalDate dateProgramation;
+    private Boolean isDone;
     private Boolean periodique;
     private LocalDate dateDebutIntervention;
     private LocalDate dateFinIntervention;
@@ -23,6 +25,8 @@ public class PreventiveDto {
         Preventive newPreventive=new Preventive();
         newPreventive.setId(dto.getId());
         newPreventive.setProgrammer(dto.getProgrammer());
+        newPreventive.setDateProgramation(dto.getDateProgramation());
+        newPreventive.setIsDone(dto.getIsDone());
         newPreventive.setPeriodique(dto.getPeriodique());
         newPreventive.setDateDebutIntervention(dto.getDateDebutIntervention());
         newPreventive.setDateFinIntervention(dto.getDateFinIntervention());
@@ -38,6 +42,8 @@ public class PreventiveDto {
         return  PreventiveDto.builder()
                 .id(preventive.getId())
                 .programmer(preventive.getProgrammer())
+                .dateProgramation(preventive.getDateProgramation())
+                .isDone(preventive.getIsDone())
                 .periodique(preventive.getPeriodique())
                 .dateDebutIntervention(preventive.getDateDebutIntervention())
                 .dateFinIntervention(preventive.getDateFinIntervention())
