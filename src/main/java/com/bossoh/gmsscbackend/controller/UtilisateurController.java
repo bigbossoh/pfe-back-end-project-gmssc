@@ -27,6 +27,10 @@ public class UtilisateurController {
     public UtilisateurDto getUtilisateurByID(@PathVariable("IdUser") Long IdUser) {
         return utilisateurService.findById(IdUser);
     }
+    @GetMapping(value=APP_ROOT+"/utilisateur/{email}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public UtilisateurDto getUtilisateurByEmail(@PathVariable("email") String email) {
+        return utilisateurService.findByEmail(email);
+    }
     @PostMapping(value =APP_ROOT+"/utilisateurs/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,7 +43,6 @@ public class UtilisateurController {
     public UtilisateurDto changerMotDePasse(@RequestBody ChangerMotDePasseUtilisateurDto dto) {
         return utilisateurService.changerMotDePasse(dto);
     }
-
     @DeleteMapping(value = APP_ROOT+"/utilisateurs/delete/{IdUser}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteUtilisateur(@PathVariable("IdUser") Long IdUser) {
