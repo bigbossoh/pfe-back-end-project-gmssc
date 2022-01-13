@@ -8,21 +8,18 @@ import com.bossoh.gmsscbackend.utils.JwtUtil;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import static com.bossoh.gmsscbackend.utils.Constants.APP_ROOT;
 
-import static com.bossoh.gmsscbackend.utils.Constants.AUTHENTICATION_ENDPOINT;
 
 @RestController
-
-@RequestMapping(AUTHENTICATION_ENDPOINT)
+@Api(APP_ROOT+"/auth")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthenticationController {
@@ -33,7 +30,7 @@ public class AuthenticationController {
 
     private final JwtUtil jwtUtil;
 
-    @PostMapping("/authenticate")
+    @PostMapping(APP_ROOT+"/auth/authenticate")
 
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         authenticationManager.authenticate(
