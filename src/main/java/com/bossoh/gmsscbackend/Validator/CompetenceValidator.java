@@ -12,17 +12,17 @@ public class CompetenceValidator {
         List<String>errors= new ArrayList<>();
         if(dto==null ){
             errors.add("Veuillez renseillez le nom de la competence");
-            errors.addAll(UtilisateurValidator.validate(null));
+            errors.addAll(IntervenantValidator.validate(null));
             return errors;
         }
         if(!StringUtils.hasLength(dto.getJob())){
             errors.add("Veuillez renseillez le nom de la competence");
         }
 
-        if(dto.getUserDto()==null || dto.getUserDto().getId()==null){
+        if(dto.getIntervenantDto()==null || dto.getIntervenantDto().getId()==null){
             errors.add("Veuillez selectionner un utilisateur");
         }
-        errors.addAll(UtilisateurValidator.validate(dto.getUserDto()));
+        errors.addAll(IntervenantValidator.validate(dto.getIntervenantDto()));
         return errors;
     }
 }

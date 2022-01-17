@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -20,7 +21,7 @@ public class EquipementDto {
     private double poidsNetInterieur;
     private double poidsNetExterieur;
     private String puissance;
-    private Instant dateAchat;
+    private LocalDate dateAchat;
     private Integer garantie;
     private String nomFournisseur;
     private String personneRessource;

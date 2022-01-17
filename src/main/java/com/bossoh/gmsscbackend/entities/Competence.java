@@ -20,5 +20,5 @@ public class Competence extends AbstractEntity {
     private String descrition;
     private String Job;
     @ManyToOne
-    private Utilisateur user;
+    private Intervenant intervenant;
 }

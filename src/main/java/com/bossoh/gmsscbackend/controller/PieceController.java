@@ -28,7 +28,7 @@ public class PieceController {
     public PiecesDto getPieceByID(@PathVariable("IdPiece") Long IdPiece) {
         return pieceService.getPieceById(IdPiece);
     }
-    @GetMapping(value=APP_ROOT+"/pieces/getPiece/{codePiece}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value=APP_ROOT+"/pieces/getPiece/{CodePiece}",produces = MediaType.APPLICATION_JSON_VALUE)
     public PiecesDto getPieceByCodePiece(@PathVariable("CodePiece") String CodePiece) {
         return pieceService.getPieceByCode(CodePiece);
     }

@@ -2,8 +2,7 @@ package com.bossoh.gmsscbackend.Dto;
 import com.bossoh.gmsscbackend.entities.Societe;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.Instant;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -12,7 +11,7 @@ public class SocieteDto {
     private String codeSociete;
     private String denomination;
     private String sigle;
-    private Instant dateCreationSociete;
+    private LocalDate dateCreationSociete;
     private String descriptionActivite;
     private String codeFiscal;
     private String photo;

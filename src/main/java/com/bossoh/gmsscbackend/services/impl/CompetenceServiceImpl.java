@@ -10,6 +10,7 @@ import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
 import com.bossoh.gmsscbackend.exceptions.InvalidEntityException;
 import com.bossoh.gmsscbackend.exceptions.InvalidOperationException;
 import com.bossoh.gmsscbackend.repositories.CompetenceRepository;
+import com.bossoh.gmsscbackend.repositories.IntervenantRepository;
 import com.bossoh.gmsscbackend.repositories.UtilisateurRepository;
 import com.bossoh.gmsscbackend.services.CompetenceService;
 import com.bossoh.gmsscbackend.services.UtilisateurService;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
 public class CompetenceServiceImpl implements CompetenceService {
 
     private final CompetenceRepository competenceRepository;
-    private  final UtilisateurRepository utilisateurRepository;
+    private  final IntervenantRepository intervenantRepository;
 
     @Override
     public CompetenceDto saveCompetence(CompetenceDto competenceDto) {
@@ -40,11 +41,11 @@ public class CompetenceServiceImpl implements CompetenceService {
             throw new InvalidEntityException("Certain attributs de l'object competence sont null.",
                     ErrorCodes.COMPETENCE_NOT_VALID,errors);
         }
-        Optional<Utilisateur> utilisateur = utilisateurRepository.findUtilisateurById(competenceDto.getUserDto().getId());
-        if (!utilisateur.isPresent()) {
-            log.warn("L'utilisateur with ID {} was not found in the DB", competenceDto.getUserDto().getId());
-            throw new EntityNotFoundException("Aucun utilisateur avec l'ID" + competenceDto.getUserDto().getId()+ " n'a ete trouve dans la BDD",
-                    ErrorCodes.SOCIETE_NOT_FOUND);
+        Optional<Intervenant> intervenant = intervenantRepository.findIntervenantById(competenceDto.getIntervenantDto().getId());
+        if (!intervenant.isPresent()) {
+            log.warn("L'intervanat with ID {} was not found in the DB", competenceDto.getIntervenantDto().getId());
+            throw new EntityNotFoundException("Aucun intervenant avec l'ID" + competenceDto.getIntervenantDto().getId()+ " n'a ete trouve dans la BDD",
+                    ErrorCodes.INTERVENANT_NOT_FOUND);
         }
 
         Competence saveCompetence=competenceRepository.save(CompetenceDto.toEntity(competenceDto));

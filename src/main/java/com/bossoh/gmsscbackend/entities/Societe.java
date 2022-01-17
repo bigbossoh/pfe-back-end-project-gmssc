@@ -23,7 +23,7 @@ public class Societe  extends AbstractEntity{
 	private String codeSociete;
 	private String denomination;
 	private String sigle;
-	private Instant dateCreationSociete;
+	private LocalDate dateCreationSociete;
 	private String descriptionActivite;
 	private String codeFiscal;
 	private String photo;
@@ -36,4 +36,6 @@ public class Societe  extends AbstractEntity{
 	private Adresse adresse;
 	@OneToMany(mappedBy = "societe")
 	private List<BienImmobilier> bienImmobiliers;
+	@OneToMany(mappedBy = "societe")
+	private List<Intervenant> intervenantList;
 }

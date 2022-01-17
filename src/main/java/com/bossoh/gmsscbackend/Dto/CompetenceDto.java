@@ -10,7 +10,7 @@ public class CompetenceDto {
     private Long id;
     private String descrition;
     private String job;
-    private UtilisateurDto userDto;
+    private IntervenantDto intervenantDto;
     public static Competence toEntity(CompetenceDto dto){
 
         if(dto==null){
@@ -20,7 +20,7 @@ public class CompetenceDto {
         cpt.setId(dto.getId());
         cpt.setDescrition(dto.getDescrition());
         cpt.setJob(dto.getJob());
-        cpt.setUser(UtilisateurDto.toEntity(dto.getUserDto()));
+        cpt.setIntervenant(IntervenantDto.toEntity(dto.getIntervenantDto()));
         return cpt;
     }
     public static CompetenceDto fromEntity(Competence competence){
@@ -31,7 +31,7 @@ public class CompetenceDto {
                 .id(competence.getId())
                 .descrition(competence.getDescrition())
                 .job(competence.getJob())
-                .userDto(UtilisateurDto.fromEntity(competence.getUser()))
+                .intervenantDto(IntervenantDto.fromEntity(competence.getIntervenant()))
                 .build();
     }
 }

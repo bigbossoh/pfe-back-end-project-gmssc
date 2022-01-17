@@ -39,7 +39,7 @@ public class PieceEquipementController {
         return pieceEquipementService.savePieceEquipement(pieceEquipement);
     }
 
-    @DeleteMapping(value = APP_ROOT+"/PieceEquipements/delete/{IdBien}",
+    @DeleteMapping(value = APP_ROOT+"/PieceEquipements/delete/{IdPieceEqpt}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean deletePieceEquipementById(@PathVariable("IdPieceEqpt") Long IdPieceEqpt) {
         return pieceEquipementService.deletePieceEquipement(IdPieceEqpt);
