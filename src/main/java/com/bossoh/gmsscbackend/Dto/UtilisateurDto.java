@@ -14,6 +14,7 @@ public class UtilisateurDto {
     private String nom;
     private String prenom;
     private String email;
+    private String mobile;
     private LocalDate dateDeNaissance;
     private String moteDePasse;
     private AdresseDto adresseDto;
@@ -30,6 +31,7 @@ public class UtilisateurDto {
                 .nom(utilisateur.getNom())
                 .prenom(utilisateur.getPrenom())
                 .email(utilisateur.getEmail())
+                .mobile(utilisateur.getMobile())
                 .moteDePasse(utilisateur.getMoteDePasse())
                 .dateDeNaissance(utilisateur.getDateDeNaissance())
                 .adresseDto(AdresseDto.fromEntity(utilisateur.getAdresse()))
@@ -52,6 +54,7 @@ public class UtilisateurDto {
         utilisateur.setNom(dto.getNom());
         utilisateur.setPrenom(dto.getPrenom());
         utilisateur.setEmail(dto.getEmail());
+        utilisateur.setMobile(dto.getMobile());
         utilisateur.setMoteDePasse(dto.getMoteDePasse());
         utilisateur.setDateDeNaissance(dto.getDateDeNaissance());
         utilisateur.setAdresse(AdresseDto.toEntity(dto.getAdresseDto()));

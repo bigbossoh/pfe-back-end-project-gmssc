@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -26,7 +27,7 @@ public class Equipement extends AbstractEntity {
     private double poidsNetInterieur;
     private double poidsNetExterieur;
     private String puissance;
-    private Instant dateAchat;
+    private LocalDate dateAchat;
     private Integer garantie;
     private String nomFournisseur;
     private String personneRessource;

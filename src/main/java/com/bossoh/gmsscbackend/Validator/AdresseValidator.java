@@ -18,7 +18,6 @@ public class AdresseValidator {
       errors.add("Veuillez renseigner l'adresse 1'");
       errors.add("Veuillez renseigner la ville'");
       errors.add("Veuillez renseigner le pays'");
-      errors.add("Veuillez renseigner le code postal'");
       return errors;
     }
     if (!StringUtils.hasLength(adresseDto.getAdresse1())) {
@@ -29,9 +28,6 @@ public class AdresseValidator {
     }
     if (!StringUtils.hasLength(adresseDto.getPays())) {
       errors.add("Veuillez renseigner le pays'");
-    }
-    if (!StringUtils.hasLength(adresseDto.getAdresse1())) {
-      errors.add("Veuillez renseigner le code postal'");
     }
     return errors;
   }

@@ -17,6 +17,7 @@ public class Utilisateur extends AbstractEntity {
     private String nom;
     private String prenom;
     private String email;
+    private String mobile;
     private LocalDate dateDeNaissance;
     private String moteDePasse;
     @Embedded
@@ -25,7 +26,7 @@ public class Utilisateur extends AbstractEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "utilisateur")
     @JsonIgnore
     private List<Roles> roles=new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "intervenant")
     @JsonIgnore
     private List<Competence> competenceList;
 
