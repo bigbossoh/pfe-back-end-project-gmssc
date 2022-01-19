@@ -10,4 +10,5 @@ public interface PieceRepository extends JpaRepository<Pieces,Long> {
     Optional<Pieces> findById(Long Id);
     Optional<Pieces> findPieceByCodePiece(String codePiece);
     List<Pieces> findAllByBienImmobilierId(Long id);
+
 }

@@ -1,4 +1,5 @@
 package com.bossoh.gmsscbackend.services.impl;
+import com.bossoh.gmsscbackend.Dto.IntervenantDto;
 import com.bossoh.gmsscbackend.Dto.PiecesDto;
 import com.bossoh.gmsscbackend.Validator.PieceValidator;
 import com.bossoh.gmsscbackend.entities.BienImmobilier;
@@ -76,6 +77,15 @@ public class PieceServiceImpl implements PieceService {
                 .map(PiecesDto::fromEntity)
                 .orElseThrow(() -> new InvalidEntityException("Aucune piece has been found with Code " + codePieceDto,
                         ErrorCodes.PIECE_NOT_FOUND));
+    }
+
+    @Override
+    public List<PiecesDto> listOfPiecesDtosByBienImmobilierId(Long Id) {
+        log.info("We are going to take back all inrervenant");
+
+        return pieceRepository.findAllByBienImmobilierId(Id).stream()
+                .map(PiecesDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
