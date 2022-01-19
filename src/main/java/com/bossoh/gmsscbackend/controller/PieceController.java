@@ -32,6 +32,10 @@ public class PieceController {
     public PiecesDto getPieceByCodePiece(@PathVariable("CodePiece") String CodePiece) {
         return pieceService.getPieceByCode(CodePiece);
     }
+    @GetMapping(value=APP_ROOT+"/pieces/allPiecesByBien/{idPiece}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PiecesDto> listPiecesByBienImmoId(@PathVariable("idPiece") Long idPiece) {
+        return pieceService.listOfPiecesDtosByBienImmobilierId(idPiece);
+    }
     @PostMapping(value =APP_ROOT+"/pieces/savepiece",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

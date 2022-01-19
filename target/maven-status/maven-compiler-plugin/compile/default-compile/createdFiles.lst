@@ -1,5 +1,6 @@
 com\bossoh\gmsscbackend\repositories\EquipementRepository.class
 com\bossoh\gmsscbackend\Validator\BienImmobilierValidator.class
+com\bossoh\gmsscbackend\services\IntervenantService.class
 com\bossoh\gmsscbackend\controller\PieceEquipementController.class
 com\bossoh\gmsscbackend\utils\JwtUtil.class
 com\bossoh\gmsscbackend\controller\PreventiveController.class
@@ -10,6 +11,7 @@ com\bossoh\gmsscbackend\repositories\PieceEquipementRepository.class
 com\bossoh\gmsscbackend\entities\GroupeIntervenant.class
 com\bossoh\gmsscbackend\Dto\RolesDto.class
 com\bossoh\gmsscbackend\entities\Adresse.class
+com\bossoh\gmsscbackend\repositories\IntervenantRepository.class
 com\bossoh\gmsscbackend\exceptions\InvalidOperationException.class
 com\bossoh\gmsscbackend\Dto\CompetenceDto.class
 com\bossoh\gmsscbackend\Validator\ContratValidator.class
@@ -25,6 +27,7 @@ com\bossoh\gmsscbackend\Validator\AdresseValidator.class
 com\bossoh\gmsscbackend\entities\Equipement.class
 com\bossoh\gmsscbackend\repositories\PieceRepository.class
 com\bossoh\gmsscbackend\controller\ContratController.class
+com\bossoh\gmsscbackend\Dto\IntervenantDto$IntervenantDtoBuilder.class
 com\bossoh\gmsscbackend\Dto\SignalerPanneDto.class
 com\bossoh\gmsscbackend\Validator\PieceEquipementValidator.class
 com\bossoh\gmsscbackend\entities\Societe.class
@@ -45,6 +48,7 @@ com\bossoh\gmsscbackend\Dto\PreventiveDto.class
 com\bossoh\gmsscbackend\entities\Corrective.class
 com\bossoh\gmsscbackend\repositories\BienImmobilierRepository.class
 com\bossoh\gmsscbackend\repositories\GroupeIntervenantRepository.class
+com\bossoh\gmsscbackend\controller\IntervenantController.class
 com\bossoh\gmsscbackend\controller\UtilisateurController.class
 com\bossoh\gmsscbackend\Dto\EquipementDto.class
 com\bossoh\gmsscbackend\repositories\SocieteRepository.class
@@ -94,6 +98,7 @@ com\bossoh\gmsscbackend\controller\UtilisateurGroupeIntervenantController.class
 com\bossoh\gmsscbackend\repositories\PreventiveRepository.class
 com\bossoh\gmsscbackend\controller\GroupeIntervenantController.class
 com\bossoh\gmsscbackend\utils\UtilRandom.class
+com\bossoh\gmsscbackend\Dto\IntervenantDto.class
 com\bossoh\gmsscbackend\Validator\SignalerPanneValidator.class
 com\bossoh\gmsscbackend\Validator\UtilisateurValidator.class
 com\bossoh\gmsscbackend\Dto\AdresseDto.class
@@ -115,6 +120,7 @@ com\bossoh\gmsscbackend\config\ApplicationRequestFilter.class
 com\bossoh\gmsscbackend\entities\BienImmobilier.class
 com\bossoh\gmsscbackend\repositories\ContratRepository.class
 com\bossoh\gmsscbackend\entities\enumeration\TypeBienImmobilier.class
+com\bossoh\gmsscbackend\services\impl\IntervenantServiceImpl.class
 com\bossoh\gmsscbackend\Dto\PreventiveDto$PreventiveDtoBuilder.class
 com\bossoh\gmsscbackend\Handlers\ErrorDto.class
 com\bossoh\gmsscbackend\services\SignalerPanneService.class
@@ -125,12 +131,14 @@ com\bossoh\gmsscbackend\Dto\EquipementDto$EquipementDtoBuilder.class
 com\bossoh\gmsscbackend\controller\EquipementController.class
 com\bossoh\gmsscbackend\repositories\SignalePanneRepository.class
 com\bossoh\gmsscbackend\Dto\SocieteDto$SocieteDtoBuilder.class
+com\bossoh\gmsscbackend\Validator\IntervenantValidator.class
 com\bossoh\gmsscbackend\entities\Competence.class
 com\bossoh\gmsscbackend\Dto\ContratDto$ContratDtoBuilder.class
 com\bossoh\gmsscbackend\services\impl\GroupeIntervenantServiceImpl.class
 com\bossoh\gmsscbackend\config\SecurityConfiguration.class
 com\bossoh\gmsscbackend\services\ContratService.class
 com\bossoh\gmsscbackend\entities\auth\ExtentedUser.class
+com\bossoh\gmsscbackend\entities\Intervenant.class
 com\bossoh\gmsscbackend\services\impl\PreventiveServiceImpl.class
 com\bossoh\gmsscbackend\services\impl\PieceEquipementServiceImpl.class
 com\bossoh\gmsscbackend\Validator\GroupeIntervenantValidator.class
