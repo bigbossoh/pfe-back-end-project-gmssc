@@ -23,6 +23,9 @@ public class BienImmobilier extends AbstractEntity{
 	private Integer nbreBatiments;
 	private String Adresses1;
 	private String Adresses2;
+	private String villeSociete;
+	private String commune;
+	private String quartier;
 	private String mobile;
 	private String telephone;
 	private String autreInformation;

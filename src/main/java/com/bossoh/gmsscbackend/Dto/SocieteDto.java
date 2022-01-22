@@ -20,6 +20,9 @@ public class SocieteDto {
     private String mobile;
     private String fax;
     private String siteWeb;
+//    private String villeSociete;
+//    private String commune;
+//    private String quartier;
     private AdresseDto adresse;
 
     public static SocieteDto fromEntity(Societe societe){
@@ -39,6 +42,9 @@ public class SocieteDto {
                 .numTel(societe.getNumTel())
                 .mobile(societe.getMobile())
                 .fax(societe.getFax())
+//                .villeSociete(societe.getVilleSociete())
+//                .commune(societe.getCommune())
+//                .quartier(societe.getQuartier())
                 .siteWeb(societe.getSiteWeb())
                 .adresse(AdresseDto.fromEntity(societe.getAdresse()))
                 .build();
@@ -61,6 +67,11 @@ public class SocieteDto {
         newSociete.setMobile(dto.getMobile());
         newSociete.setFax(dto.getFax());
         newSociete.setEmail(dto.getEmail());
+
+//        newSociete.setVilleSociete(dto.getVilleSociete());
+//        newSociete.setQuartier(dto.getQuartier());
+//        newSociete.setCommune(dto.getCommune());
+
         newSociete.setSiteWeb(dto.getSiteWeb());
         newSociete.setAdresse(AdresseDto.toEntity(dto.getAdresse()));
         return newSociete;
