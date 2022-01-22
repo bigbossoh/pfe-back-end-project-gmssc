@@ -35,6 +35,12 @@ public class Equipement extends AbstractEntity {
     private String mobile;
     private boolean livreAvecAccessoires;
     private  String description;
+
+    private String numFacture;
+    private String prixFacture;
+    private LocalDate dateMiseService;
+    private String etatService;
+
     private String typeClim;
     @OneToMany(mappedBy = "equipement")
     private List<PieceEquipement> pieceEquipements;

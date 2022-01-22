@@ -29,6 +29,12 @@ public class EquipementDto {
     private String mobile;
     private boolean livreAvecAccessoires;
     private String description;
+
+    private String numFacture;
+    private String prixFacture;
+    private LocalDate dateMiseService;
+    private String etatService;
+
     private String typeClim;
     private ContratDto contratDto;
 
@@ -38,8 +44,18 @@ public class EquipementDto {
         }
         return EquipementDto.builder()
                 .id(eqpt.getId())
+                .numFacture(eqpt.getNumFacture())
+                .prixFacture(eqpt.getPrixFacture())
+                .dateMiseService(eqpt.getDateMiseService())
+                .etatService(eqpt.getEtatService())
                 .codeEquipement(eqpt.getCodeEquipement())
                 .marque(eqpt.getMarque())
+
+                .numFacture(eqpt.getNumFacture())
+                .prixFacture(eqpt.getPrixFacture())
+                 .dateMiseService(eqpt.getDateMiseService())
+                  .etatService(eqpt.getEtatService())
+
                 .numeroSerie(eqpt.getNumeroSerie())
                 .modele(eqpt.getModele())
                 .hauteur(eqpt.getHauteur())
@@ -72,6 +88,12 @@ public class EquipementDto {
         eqpt.setNumeroSerie(dto.getNumeroSerie());
         eqpt.setModele(dto.getModele());
         eqpt.setHauteur(dto.getHauteur());
+
+        eqpt.setNumFacture(dto.getNumFacture());
+        eqpt.setPrixFacture(dto.getPrixFacture());
+        eqpt.setDateMiseService(dto.getDateMiseService());
+        eqpt.setEtatService(dto.getEtatService());
+
         eqpt.setLongueur(dto.getLongueur());
         eqpt.setPoidsNetInterieur(dto.getPoidsNetInterieur());
         eqpt.setPoidsNetExterieur(dto.getPoidsNetExterieur());

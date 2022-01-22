@@ -1,5 +1,6 @@
 package com.bossoh.gmsscbackend.controller;
 
+import com.bossoh.gmsscbackend.Dto.IntervenantDto;
 import com.bossoh.gmsscbackend.Dto.PieceEquipementDto;
 import com.bossoh.gmsscbackend.entities.BienImmobilier;
 import com.bossoh.gmsscbackend.entities.PieceEquipement;
@@ -25,6 +26,10 @@ public class PieceEquipementController {
         return pieceEquipementService.listOfPieceEquipement();
     }
 
+    @GetMapping(value=APP_ROOT+"/PieceEquipements/allbyequiment/{IdEquipement}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PieceEquipementDto> listOfPiecEqpmtByEqpmntID(@PathVariable("IdEquipement") Long IdEquipement){
+        return pieceEquipementService.listOfPieceEquipementByEquipementDtos(IdEquipement);
+    }
 
     @GetMapping(value=APP_ROOT+"/PieceEquipements/{IdPieceEqpt}",produces = MediaType.APPLICATION_JSON_VALUE)
     public PieceEquipementDto getPieceEquipementByID(@PathVariable("IdPieceEqpt") Long IdPieceEqpt) {

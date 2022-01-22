@@ -60,6 +60,31 @@
         }
       }
     },
+    "/gmssc/api/v1/PieceEquipements/allbyequiment/{IdEquipement}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1PieceEquipements" ],
+        "operationId" : "listOfPiecEqpmtByEqpmntID",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdEquipement",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/PieceEquipementDto"
+              }
+            }
+          }
+        }
+      }
+    },
     "/gmssc/api/v1/PieceEquipements/delete/{IdPieceEqpt}" : {
       "delete" : {
         "tags" : [ "gmsscapiv1PieceEquipements" ],
@@ -1493,6 +1518,15 @@
         "telephone" : {
           "type" : "string"
         },
+        "villeSociete" : {
+          "type" : "string"
+        },
+        "commune" : {
+          "type" : "string"
+        },
+        "quartier" : {
+          "type" : "string"
+        },
         "autreInformation" : {
           "type" : "string"
         },
@@ -1503,10 +1537,10 @@
         "societeDto" : {
           "$ref" : "#/definitions/SocieteDto"
         },
-        "adresses2" : {
+        "adresses1" : {
           "type" : "string"
         },
-        "adresses1" : {
+        "adresses2" : {
           "type" : "string"
         }
       }
@@ -1732,6 +1766,19 @@
           "type" : "boolean"
         },
         "description" : {
+          "type" : "string"
+        },
+        "numFacture" : {
+          "type" : "string"
+        },
+        "prixFacture" : {
+          "type" : "string"
+        },
+        "dateMiseService" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "etatService" : {
           "type" : "string"
         },
         "typeClim" : {

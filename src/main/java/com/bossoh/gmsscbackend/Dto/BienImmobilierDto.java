@@ -17,6 +17,11 @@ public class BienImmobilierDto {
     private String Adresses2;
     private String mobile;
     private String telephone;
+
+    private String villeSociete;
+    private String commune;
+    private String quartier;
+
     private String autreInformation;
     private Integer nombrePiece;
     private SocieteDto societeDto;
@@ -33,6 +38,11 @@ public class BienImmobilierDto {
         newBien.setAdresses1(dto.getAdresses1());
         newBien.setAdresses2(dto.getAdresses2());
         newBien.setMobile(dto.getMobile());
+
+        newBien.setVilleSociete(dto.getVilleSociete());
+        newBien.setQuartier(dto.getQuartier());
+        newBien.setCommune(dto.getCommune());
+
         newBien.setTelephone(dto.getTelephone());
         newBien.setAutreInformation(dto.getAutreInformation());
         newBien.setNombrePiece(dto.getNombrePiece());
@@ -52,6 +62,11 @@ public class BienImmobilierDto {
                 .Adresses1(bienImmobilier.getAdresses1())
                 .Adresses2(bienImmobilier.getAdresses2())
                 .mobile(bienImmobilier.getMobile())
+
+                .villeSociete(bienImmobilier.getVilleSociete())
+                .commune(bienImmobilier.getCommune())
+                .quartier(bienImmobilier.getQuartier())
+
                 .telephone(bienImmobilier.getTelephone())
                 .autreInformation(bienImmobilier.getAutreInformation())
                 .nombrePiece(bienImmobilier.getNombrePiece())

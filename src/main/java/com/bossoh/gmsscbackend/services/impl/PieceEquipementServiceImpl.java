@@ -1,5 +1,6 @@
 package com.bossoh.gmsscbackend.services.impl;
 
+import com.bossoh.gmsscbackend.Dto.IntervenantDto;
 import com.bossoh.gmsscbackend.Dto.PieceEquipementDto;
 import com.bossoh.gmsscbackend.Validator.PieceEquipementValidator;
 import com.bossoh.gmsscbackend.entities.Equipement;
@@ -15,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,7 +56,7 @@ public class PieceEquipementServiceImpl implements PieceEquipementService {
             throw new EntityNotFoundException("Aucune piece avec l'ID" + pedto.getPiecesDto().getId()+ " n'a ete trouve dans la BDD",
                     ErrorCodes.PIECE_NOT_FOUND);
         }
-
+        pedto.setDateInstallation(LocalDate.now());
         return PieceEquipementDto
                 .fromEntity(pieceEquipementRepository
                         .save(PieceEquipementDto.toEntity(pedto))
@@ -71,6 +74,16 @@ public class PieceEquipementServiceImpl implements PieceEquipementService {
                 .map(PieceEquipementDto::fromEntity)
                 .orElseThrow(()->new InvalidEntityException("Aucun bien immobilier has been found with ID "+id,
                         ErrorCodes.EQUIPEMENT_PIECE_NOT_FOUND));
+    }
+
+    @Override
+    public List<PieceEquipementDto> listOfPieceEquipementByEquipementDtos(Long IdEquipement) {
+        log.info("We are going to take back all PieceEquipement by Equipement" , IdEquipement);
+
+        return pieceEquipementRepository.findAll().stream()
+                .filter(e -> e.getEquipement().getId()==IdEquipement)
+                .map(PieceEquipementDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
