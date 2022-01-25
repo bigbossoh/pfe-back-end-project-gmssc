@@ -71,6 +71,18 @@ public class EquipementServiceImpl implements EquipementService {
     }
 
     @Override
+    public List<EquipementDto> listEquipementbySociete(Long IdSociete) {
+        log.info("We are going to get back the equipement en fonction de l'ID {} de la societe", IdSociete);
+        if(IdSociete==null){
+            log.error("you are provided a null ID for the equipement");
+            return null;
+        }
+        return equipementRepository.findAllBySocieteId(IdSociete).stream()
+                .map(EquipementDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public boolean deleteEquipement(Long id) {
         log.info("We are going to delete a Equipement {}", id);
         if (id==null){

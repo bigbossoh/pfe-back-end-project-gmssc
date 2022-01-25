@@ -13,6 +13,8 @@ public interface EquipementService {
 
     EquipementDto getEquipementByCode(String codeEquipement);
 
+    List<EquipementDto> listEquipementbySociete(Long IdSociete);
+
     boolean deleteEquipement(Long id);
 
 

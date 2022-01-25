@@ -26,10 +26,15 @@ public class EquipementController {
     public EquipementDto getEquipementByID(@PathVariable("IdEquipement") Long IdEquipement) {
         return equipementService.getEquipementById(IdEquipement);
     }
-    @GetMapping(value=APP_ROOT+"/equipements/getPiece/{CodeEquipement}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value=APP_ROOT+"/equipements/getequipement/{CodeEquipement}",produces = MediaType.APPLICATION_JSON_VALUE)
     public EquipementDto getPieceByID(@PathVariable("CodeEquipement") String CodeEquipement) {
         return equipementService.getEquipementByCode(CodeEquipement);
     }
+    @GetMapping(value=APP_ROOT+"/equipements/getallequipement/{idsoiete}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<EquipementDto> getListeEquipementByIdSociete(@PathVariable("idsoiete") Long idsoiete) {
+        return equipementService.listEquipementbySociete(idsoiete);
+    }
+
     @PostMapping(value =APP_ROOT+"/equipements/saveEquipement",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

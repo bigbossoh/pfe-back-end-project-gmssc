@@ -17,5 +17,9 @@ public interface SocieteService {
 
 	List<SocieteDto> listOfSocietes();
 
+	List<SocieteDto> listOfSocietesMaintenance();
+
+	List<SocieteDto> ListofSocieteByDenominationOrderByAsc();
+
 	boolean deleteSociete(Long id);
 }

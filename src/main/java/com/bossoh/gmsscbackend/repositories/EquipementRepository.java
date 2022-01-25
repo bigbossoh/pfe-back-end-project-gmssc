@@ -11,4 +11,5 @@ public interface EquipementRepository extends JpaRepository<Equipement,Long> {
     Optional<Equipement> findEquipementByCodeEquipement(String codeEquipement);
     Optional<Equipement> findEquipementById(Long id);
     List<Equipement> findEquipementByContratEquipement(Optional<Contrat> contrat);
+    List<Equipement> findAllBySocieteId(Long idSociete);
 }

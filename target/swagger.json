@@ -516,7 +516,32 @@
         }
       }
     },
-    "/gmssc/api/v1/equipements/getPiece/{CodeEquipement}" : {
+    "/gmssc/api/v1/equipements/getallequipement/{idsoiete}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1equipements" ],
+        "operationId" : "getListeEquipementByIdSociete",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idsoiete",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/EquipementDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/equipements/getequipement/{CodeEquipement}" : {
       "get" : {
         "tags" : [ "gmsscapiv1equipements" ],
         "operationId" : "getPieceByID",
@@ -1188,6 +1213,42 @@
         }
       }
     },
+    "/gmssc/api/v1/societes/allfilterbysocietemaintenance" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1societes" ],
+        "operationId" : "getListeDesSocietesfilterbysocietemaintenance",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SocieteDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/societes/allorder" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1societes" ],
+        "operationId" : "getListeDesSocietesOrderByAsc",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SocieteDto"
+              }
+            }
+          }
+        }
+      }
+    },
     "/gmssc/api/v1/societes/delete/{idSociete}" : {
       "delete" : {
         "tags" : [ "gmsscapiv1societes" ],
@@ -1537,10 +1598,10 @@
         "societeDto" : {
           "$ref" : "#/definitions/SocieteDto"
         },
-        "adresses1" : {
+        "adresses2" : {
           "type" : "string"
         },
-        "adresses2" : {
+        "adresses1" : {
           "type" : "string"
         }
       }
@@ -1786,6 +1847,9 @@
         },
         "contratDto" : {
           "$ref" : "#/definitions/ContratDto"
+        },
+        "societeDto" : {
+          "$ref" : "#/definitions/SocieteDto"
         },
         "longueur" : {
           "type" : "number",
@@ -2036,6 +2100,9 @@
         },
         "siteWeb" : {
           "type" : "string"
+        },
+        "societeMaintenance" : {
+          "type" : "boolean"
         },
         "adresse" : {
           "$ref" : "#/definitions/AdresseDto"
