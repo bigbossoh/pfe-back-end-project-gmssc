@@ -5,16 +5,13 @@ import java.util.List;
 import com.bossoh.gmsscbackend.Dto.SocieteDto;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.bossoh.gmsscbackend.entities.Societe;
 import com.bossoh.gmsscbackend.services.SocieteService;
 
 import static com.bossoh.gmsscbackend.utils.Constants.APP_ROOT;
@@ -30,6 +27,16 @@ public class SocieteController {
 	public List<SocieteDto> getListeDesSocietes() {
 
 		return societeService.listOfSocietes();
+	}
+	@GetMapping(value=APP_ROOT+"/societes/allorder",produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<SocieteDto> getListeDesSocietesOrderByAsc() {
+
+		return societeService.ListofSocieteByDenominationOrderByAsc();
+	}
+	@GetMapping(value=APP_ROOT+"/societes/allfilterbysocietemaintenance",produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<SocieteDto> getListeDesSocietesfilterbysocietemaintenance() {
+
+		return societeService.listOfSocietesMaintenance();
 	}
 	@GetMapping(value=APP_ROOT+"/societes/{IdSociete}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public SocieteDto getSocieteByID(@PathVariable("IdSociete") Long IdSociete) {

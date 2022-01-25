@@ -40,11 +40,12 @@ public class Equipement extends AbstractEntity {
     private String prixFacture;
     private LocalDate dateMiseService;
     private String etatService;
-
     private String typeClim;
     @OneToMany(mappedBy = "equipement")
     private List<PieceEquipement> pieceEquipements;
     @ManyToOne
     @JoinColumn(name="id_contrat")
     private Contrat contratEquipement;
+    @ManyToOne
+    private Societe societe;
 }

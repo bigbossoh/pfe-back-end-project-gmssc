@@ -32,9 +32,7 @@ public class Societe  extends AbstractEntity{
 	private String mobile;
 	private String fax;
 	private String siteWeb;
-//	private String villeSociete;
-//	private String commune;
-//	private String quartier;
+	private boolean societeMaintenance;
 	@Embedded
 	private Adresse adresse;
 	@OneToMany(mappedBy = "societe")

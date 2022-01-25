@@ -91,4 +91,21 @@ public class SocieteServiceImpl implements SocieteService {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public List<SocieteDto> listOfSocietesMaintenance() {
+		return societeRepository.findAllBySocieteMaintenanceIsTrueOrderByDenominationAsc()
+				.stream()
+				.map(SocieteDto::fromEntity)
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<SocieteDto> ListofSocieteByDenominationOrderByAsc() {
+		return societeRepository.findAllByOrderByDenominationAsc()
+				.stream()
+				.map(SocieteDto::fromEntity)
+				.collect(Collectors.toList());
+
+	}
+
 }

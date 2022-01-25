@@ -38,6 +38,8 @@ public class EquipementDto {
     private String typeClim;
     private ContratDto contratDto;
 
+    private SocieteDto societeDto;
+
     public static EquipementDto fromEntity(Equipement eqpt) {
         if (eqpt == null) {
             return null;
@@ -74,6 +76,7 @@ public class EquipementDto {
                 .description(eqpt.getDescription())
                 .typeClim(eqpt.getTypeClim())
                 .contratDto(ContratDto.fromEntity(eqpt.getContratEquipement()))
+                .societeDto(SocieteDto.fromEntity(eqpt.getSociete()))
                 .build();
     }
     public static  Equipement toEntity(EquipementDto dto){
@@ -108,6 +111,7 @@ public class EquipementDto {
         eqpt.setDescription(dto.getDescription());
         eqpt.setTypeClim(dto.getTypeClim());
         eqpt.setContratEquipement(ContratDto.toEntity(dto.getContratDto()));
+        eqpt.setSociete(SocieteDto.toEntity(dto.getSocieteDto()));
         return eqpt;
     }
 }
