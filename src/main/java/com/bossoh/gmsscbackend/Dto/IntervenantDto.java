@@ -15,6 +15,7 @@ public class IntervenantDto {
     private String fonctionInterv;
     private String mobile;
     private String adresse;
+    private String emailIntervenant;
     private String autreInfo;
     private SocieteDto societeDto;
     public static Intervenant toEntity(IntervenantDto dto) {
@@ -29,6 +30,7 @@ public class IntervenantDto {
         newIntervenant.setMobile(dto.getMobile());
         newIntervenant.setAdresse(dto.getAdresse());
         newIntervenant.setAutreInfo(dto.getAutreInfo());
+        newIntervenant.setEmailIntervenant(dto.getEmailIntervenant());
         newIntervenant.setSociete(SocieteDto.toEntity(dto.getSocieteDto()));
         return newIntervenant;
     }
@@ -43,6 +45,7 @@ public class IntervenantDto {
                 .fonctionInterv(intervenant.getFonctionInterv())
                 .mobile(intervenant.getMobile())
                 .adresse(intervenant.getAdresse())
+                .emailIntervenant(intervenant.getEmailIntervenant())
                 .autreInfo(intervenant.getAutreInfo())
                 .societeDto(SocieteDto.fromEntity(intervenant.getSociete()))
                 .build();

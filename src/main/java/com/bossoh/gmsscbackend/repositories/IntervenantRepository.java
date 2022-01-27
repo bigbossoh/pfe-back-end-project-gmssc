@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface IntervenantRepository extends JpaRepository<Intervenant,Long> {
 
     Optional<Intervenant> findIntervenantById(Long idInterv);
-    List<Intervenant> findAllBySocieteId(Long idSociete);
+    List<Intervenant> findAllBySocieteIdAndFonctionInterv(Long idSociete, String fonctionInterv);
+    List<Intervenant> findAllByFonctionInterv( String fonctionInterv);
 }

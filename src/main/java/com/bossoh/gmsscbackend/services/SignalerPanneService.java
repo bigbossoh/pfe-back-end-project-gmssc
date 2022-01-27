@@ -8,6 +8,7 @@ import java.util.List;
 public interface SignalerPanneService {
 
     List<SignalerPanneDto> listOfSignalerPanne();
+    List<SignalerPanneDto> listOfSignalerPanneParOrder();
 
     SignalerPanneDto saveSignalerPanne(SignalerPanneDto Dto);
 

@@ -6,18 +6,20 @@ import com.bossoh.gmsscbackend.entities.*;
 import com.bossoh.gmsscbackend.exceptions.EntityNotFoundException;
 import com.bossoh.gmsscbackend.exceptions.ErrorCodes;
 import com.bossoh.gmsscbackend.exceptions.InvalidEntityException;
-import com.bossoh.gmsscbackend.repositories.PieceRepository;
-import com.bossoh.gmsscbackend.repositories.SignalePanneRepository;
-import com.bossoh.gmsscbackend.repositories.UtilisateurRepository;
+import com.bossoh.gmsscbackend.repositories.*;
 import com.bossoh.gmsscbackend.services.SignalerPanneService;
 import com.bossoh.gmsscbackend.utils.UtilRandom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -29,11 +31,14 @@ public class SignalerPanneServiceImpl implements SignalerPanneService {
 
     private final SignalePanneRepository signalePanneRepository;
     private final UtilisateurRepository utilisateurRepository;
+    private final IntervenantRepository intervenantRepository;
+    private final EmailSendService emailSendService;
     private final PieceRepository pieceRepository;
     private final UtilRandom utilRandom;
 
     @Override
     public SignalerPanneDto saveSignalerPanne(SignalerPanneDto Dto) {
+        //  DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         log.info("We are going to save a new signalerpanne {}", Dto);
         List<String> errors = SignalerPanneValidator.Validate(Dto);
         if (!errors.isEmpty()) {
@@ -47,11 +52,16 @@ public class SignalerPanneServiceImpl implements SignalerPanneService {
             throw new EntityNotFoundException("Aucun utilisateur avec l'ID" + Dto.getUtilisateurDto().getId() + " n'a ete trouve dans la BDD",
                     ErrorCodes.UTILISATEUR_NOT_FOUND);
         }
-
+        Optional<Intervenant> panneIntervenant = intervenantRepository.findById(Dto.getIntervenantDto().getId());
+        if (!panneIntervenant.isPresent()) {
+            log.warn("L'intervenant with ID {} was not found in the DB", Dto.getIntervenantDto().getId());
+            throw new EntityNotFoundException("Aucun intervenant avec l'ID" + Dto.getIntervenantDto().getId() + " n'a ete trouve dans la BDD",
+                    ErrorCodes.INTERVENANT_NOT_FOUND);
+        }
         Optional<Pieces> pannePiece = pieceRepository.findById(Dto.getPiecesDto().getId());
         if (!pannePiece.isPresent()) {
             log.warn("La piece with ID {} was not found in the DB", Dto.getPiecesDto().getId());
-            throw new EntityNotFoundException("Aucune piece avec l'ID" +  Dto.getPiecesDto().getId() + " n'a ete trouve dans la BDD",
+            throw new EntityNotFoundException("Aucune piece avec l'ID" + Dto.getPiecesDto().getId() + " n'a ete trouve dans la BDD",
                     ErrorCodes.PIECE_NOT_FOUND);
         }
         if (Dto.getId() == null) {
@@ -59,7 +69,33 @@ public class SignalerPanneServiceImpl implements SignalerPanneService {
         }
         Dto.setDateSignalerPanne(LocalDate.now());
         SignalerPanne saveSignalerPanne = signalePanneRepository.save(SignalerPanneDto.toEntity(Dto));
-        return SignalerPanneDto.fromEntity(saveSignalerPanne);
+        SignalerPanneDto savedSignalPanneDto = SignalerPanneDto.fromEntity(saveSignalerPanne);
+        try {
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(panneIntervenant.get().getEmailIntervenant());
+            mailMessage.setCc("bossohpaulin@gmail.com");
+            mailMessage.setSubject("Demande d'entretien ou réparation d'équipement: Priorité " + Dto.getPriorite());
+            mailMessage.setFrom("michelbossoh@univmetiers.ci");
+            mailMessage.setText(
+                    "Type de maintenance: " + Dto.getObjetPanne().toUpperCase(Locale.ROOT) + "\n" +
+                            "Date de la demande: " + Dto.getDateSignalerPanne() + "\n" +
+                            "Etat de la panne: " + Dto.getEtatSignalerPanne().toUpperCase(Locale.ROOT) + "\n" +
+                            "Requérant: Nom " + panneUtilisateur.get().getNom() + " Prénom(s): " + panneUtilisateur.get().getPrenom() + "\n" +
+                            "Description du problème: " + Dto.getDescriptionPanne() + "\n" +
+                            "Salle concerné: " + pannePiece.get().getBienImmobilier().getNomBienImmobilier() + "-" +
+                            pannePiece.get().getTypeSalle() + "-" + pannePiece.get().getNomPiece() + "\n" +
+                            "Suggestions de réparation ou améliorations à apporter: " + Dto.getSuggestionsAmeliration() + "\n" +
+                            "Bonne reception Merci."
+            );
+            emailSendService.sendMail(mailMessage);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return savedSignalPanneDto;
+        //SignalerPanneDto.fromEntity(saveSignalerPanne);
+
+
+//
     }
 
     @Override
@@ -71,6 +107,15 @@ public class SignalerPanneServiceImpl implements SignalerPanneService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<SignalerPanneDto> listOfSignalerPanneParOrder() {
+
+        log.info("We are going to take back all the signalerPanneDto by order");
+
+        return signalePanneRepository.findAllByOrderByDateSignalerPanneDesc().stream()
+                .map(SignalerPanneDto::fromEntity)
+                .collect(Collectors.toList());
+    }
     @Override
     public SignalerPanneDto getSignalerPanneId(Long id) {
         log.info("We are going to get back the signalisation of panne en fonction de l'ID {} de la panne", id);

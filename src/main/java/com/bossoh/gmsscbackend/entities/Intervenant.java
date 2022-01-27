@@ -18,6 +18,7 @@ public class Intervenant extends AbstractEntity {
     private String fonctionInterv;
     private String mobile;
     private String adresse;
+    private String emailIntervenant;
     private String autreInfo;
     @ManyToOne
     private Societe societe;

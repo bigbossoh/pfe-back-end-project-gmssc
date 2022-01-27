@@ -26,6 +26,14 @@ public class IntervenantController {
     public List<IntervenantDto> listOfIntervenantsBySocieteId(@PathVariable("IdSociete") Long IdSociete){
         return intervenantService.listOfIntervenantsBySocieteId(IdSociete);
     }
+    @GetMapping(value=APP_ROOT+"/intervenants/allbysocietebyfunction/{fonctionInterv}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<IntervenantDto> listOfIntervenantsByfunction(@PathVariable("fonctionInterv") String fonctionInterv){
+        return intervenantService.listOfIntervenantsByFonctionInterv(fonctionInterv);
+    }
+    @GetMapping(value=APP_ROOT+"/intervenants/allbysocieteandfunction/{IdSociete}/{fonctionInterv}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<IntervenantDto> listOfIntervenantsBySocieteIdAndFunction(@PathVariable("IdSociete") Long IdSociete,@PathVariable("fonctionInterv") String fonctionInterv){
+        return intervenantService.listOfIntervenantsBySocieteIDAndFunction(IdSociete,fonctionInterv);
+    }
     @GetMapping(value=APP_ROOT+"/intervenants/{IdInterv}",produces = MediaType.APPLICATION_JSON_VALUE)
     public IntervenantDto getIntervenantByID(@PathVariable("IdInterv") Long IdInterv) {
         return intervenantService.getIntervenantById(IdInterv);

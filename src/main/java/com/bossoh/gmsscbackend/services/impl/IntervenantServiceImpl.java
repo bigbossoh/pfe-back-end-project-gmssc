@@ -82,7 +82,7 @@ public class IntervenantServiceImpl implements IntervenantService {
     @Override
     public List<IntervenantDto> listOfIntervenantsBySocieteId(Long Id) {
         log.info("We are going to take back all inrervenant by society");
-
+        //byFiltring
         return intervenantRepository.findAll().stream()
                 .filter(e -> e.getSociete().getId()==Id)
                 .map(IntervenantDto::fromEntity)
@@ -94,6 +94,24 @@ public class IntervenantServiceImpl implements IntervenantService {
         log.info("We are going to take back all inrervenant");
 
         return intervenantRepository.findAll().stream()
+                .map(IntervenantDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<IntervenantDto> listOfIntervenantsBySocieteIDAndFunction(Long Id, String fonction) {
+        log.info("We are going to take back all inrervenant by id and functionresp");
+
+        return intervenantRepository.findAllBySocieteIdAndFonctionInterv(Id, fonction).stream()
+                .map(IntervenantDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<IntervenantDto> listOfIntervenantsByFonctionInterv(String fonctionInterv) {
+        log.info("We are going to take back all inrervenant by id and functionresp");
+
+        return intervenantRepository.findAllByFonctionInterv(fonctionInterv).stream()
                 .map(IntervenantDto::fromEntity)
                 .collect(Collectors.toList());
     }

@@ -12,4 +12,6 @@ public interface IntervenantService {
     boolean deleteIntervenant(Long idDto);
     List<IntervenantDto> listOfIntervenantsBySocieteId(Long Id);
     List<IntervenantDto> listOfIntervenants();
+    List<IntervenantDto> listOfIntervenantsBySocieteIDAndFunction(Long Id,String fonction);
+    List<IntervenantDto> listOfIntervenantsByFonctionInterv( String fonctionInterv);
 }

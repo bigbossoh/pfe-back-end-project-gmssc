@@ -10,16 +10,14 @@ public class SignalerPanneValidator {
     public static List<String> Validate(SignalerPanneDto dto){
         List<String>errors= new ArrayList<>();
         if(dto==null ){
-            errors.add("Veuillez renseillez le code de la signalisation");
+
             errors.add("Veuillez renseigner l'objet de la signalisation");
             errors.add("Veuillez renseigner la description de la panne");
             errors.add("Veuillez selectionner un utilisateur");
             errors.add("Veuillez selectionner une piece");
             return errors;
         }
-        if(!StringUtils.hasLength(dto.getCodeSignalerPanne())){
-            errors.add("Veuillez renseillez le code de la signalisation");
-        }
+
         if( !StringUtils.hasLength(dto.getObjetPanne())){
             errors.add("Veuillez renseigner l'objet de la signalisation");
         }
