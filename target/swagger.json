@@ -737,6 +737,60 @@
         }
       }
     },
+    "/gmssc/api/v1/intervenants/allbysocieteandfunction/{IdSociete}/{fonctionInterv}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1intervenants" ],
+        "operationId" : "listOfIntervenantsBySocieteIdAndFunction",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdSociete",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "fonctionInterv",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/IntervenantDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/intervenants/allbysocietebyfunction/{fonctionInterv}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1intervenants" ],
+        "operationId" : "listOfIntervenantsByfunction",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "fonctionInterv",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/IntervenantDto"
+              }
+            }
+          }
+        }
+      }
+    },
     "/gmssc/api/v1/intervenants/delete/{IdInterv}" : {
       "delete" : {
         "tags" : [ "gmsscapiv1intervenants" ],
@@ -1113,6 +1167,24 @@
       "get" : {
         "tags" : [ "gmsscapiv1signaler-panne" ],
         "operationId" : "getAllSignalerPanne",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SignalerPanneDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/signaler-panne/allorderdate" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1signaler-panne" ],
+        "operationId" : "getAllSignalerPanneOrderByDate",
         "produces" : [ "application/json" ],
         "responses" : {
           "200" : {
@@ -1902,6 +1974,9 @@
         "adresse" : {
           "type" : "string"
         },
+        "emailIntervenant" : {
+          "type" : "string"
+        },
         "autreInfo" : {
           "type" : "string"
         },
@@ -2035,6 +2110,9 @@
           "type" : "string",
           "format" : "date"
         },
+        "priorite" : {
+          "type" : "string"
+        },
         "dateResolutionPanne" : {
           "type" : "string",
           "format" : "date"
@@ -2049,11 +2127,17 @@
         "causeAnnulation" : {
           "type" : "string"
         },
+        "suggestionsAmeliration" : {
+          "type" : "string"
+        },
         "utilisateurDto" : {
           "$ref" : "#/definitions/UtilisateurDto"
         },
         "piecesDto" : {
           "$ref" : "#/definitions/PiecesDto"
+        },
+        "intervenantDto" : {
+          "$ref" : "#/definitions/IntervenantDto"
         }
       }
     },

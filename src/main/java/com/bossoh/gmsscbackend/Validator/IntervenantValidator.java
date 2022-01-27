@@ -15,6 +15,7 @@ public class IntervenantValidator {
             errors.add("Veuillez renseigner le nom de l'intervenant");
             errors.add("Veuillez renseigner le numero mobile de l'intervenant");
             errors.add("Veuillez selectionner une société");
+            errors.add("Veuillez renseigner l'email de l'intervenant");
             return errors;
         }
 
@@ -24,6 +25,9 @@ public class IntervenantValidator {
         }
         if (!StringUtils.hasLength(intervenantDto.getMobile())) {
             errors.add("Veuillez renseigner le numero mobile de l'intervenant");
+        }
+        if (!StringUtils.hasLength(intervenantDto.getEmailIntervenant())) {
+            errors.add("Veuillez renseigner l'email de l'intervenant");
         }
         if (intervenantDto.getSocieteDto() == null || intervenantDto.getSocieteDto().getId() == null) {
             errors.add("Veuillez selectionner une société");

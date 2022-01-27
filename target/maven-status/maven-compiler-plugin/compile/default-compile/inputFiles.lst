@@ -11,6 +11,7 @@ C:\Users\miche\Documents\Projet JEE\gmsscbackend\src\main\java\com\bossoh\gmsscb
 C:\Users\miche\Documents\Projet JEE\gmsscbackend\src\main\java\com\bossoh\gmsscbackend\Dto\UtilisateurGroupeIntervenantDto.java
 C:\Users\miche\Documents\Projet JEE\gmsscbackend\src\main\java\com\bossoh\gmsscbackend\repositories\SignalePanneRepository.java
 C:\Users\miche\Documents\Projet JEE\gmsscbackend\src\main\java\com\bossoh\gmsscbackend\services\impl\CorrectiveServiceImpl.java
+C:\Users\miche\Documents\Projet JEE\gmsscbackend\src\main\java\com\bossoh\gmsscbackend\services\impl\EmailSendService.java
 C:\Users\miche\Documents\Projet JEE\gmsscbackend\src\main\java\com\bossoh\gmsscbackend\config\SwaggerConfiguration.java
 C:\Users\miche\Documents\Projet JEE\gmsscbackend\src\main\java\com\bossoh\gmsscbackend\entities\BienImmobilier.java
 C:\Users\miche\Documents\Projet JEE\gmsscbackend\src\main\java\com\bossoh\gmsscbackend\Validator\IntervenantValidator.java

@@ -129,6 +129,7 @@ com\bossoh\gmsscbackend\Handlers\ErrorDto$ErrorDtoBuilder.class
 com\bossoh\gmsscbackend\repositories\RolesRepository.class
 com\bossoh\gmsscbackend\Dto\EquipementDto$EquipementDtoBuilder.class
 com\bossoh\gmsscbackend\controller\EquipementController.class
+com\bossoh\gmsscbackend\services\impl\EmailSendService.class
 com\bossoh\gmsscbackend\repositories\SignalePanneRepository.class
 com\bossoh\gmsscbackend\Dto\SocieteDto$SocieteDtoBuilder.class
 com\bossoh\gmsscbackend\Validator\IntervenantValidator.class

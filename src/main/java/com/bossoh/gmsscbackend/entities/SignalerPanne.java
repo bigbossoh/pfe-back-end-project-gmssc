@@ -17,14 +17,18 @@ import java.time.LocalDate;
 public class SignalerPanne extends AbstractEntity {
     private String codeSignalerPanne;
     private String objetPanne;
+    private String priorite;
     private String descriptionPanne;
     private LocalDate dateSignalerPanne;
     private LocalDate dateResolutionPanne;
     private LocalDate dateAnnulation;
     private String etatSignalerPanne;
+    private String suggestionsAmeliration;
     private String causeAnnulation;
     @ManyToOne
     private Utilisateur utilisateur;
     @ManyToOne
     private Pieces pieces;
+    @ManyToOne
+    private Intervenant intervenant;
 }

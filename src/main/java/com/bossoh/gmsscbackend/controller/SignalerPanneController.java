@@ -21,6 +21,11 @@ public class SignalerPanneController {
         return signalerPanneService.listOfSignalerPanne();
     }
 
+    @GetMapping(value=APP_ROOT+"/signaler-panne/allorderdate",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SignalerPanneDto> getAllSignalerPanneOrderByDate(){
+        return signalerPanneService.listOfSignalerPanneParOrder();
+    }
+
     @GetMapping(value=APP_ROOT+"/signaler-panne/{IdPanne}",produces = MediaType.APPLICATION_JSON_VALUE)
     public SignalerPanneDto getSignalerPanneDto(@PathVariable("IdPanne") Long IdPanne) {
         return signalerPanneService.getSignalerPanneId(IdPanne);
