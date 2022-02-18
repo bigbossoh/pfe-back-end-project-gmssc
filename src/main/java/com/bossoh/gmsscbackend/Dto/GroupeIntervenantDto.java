@@ -19,8 +19,9 @@ public class GroupeIntervenantDto {
         GroupeIntervenant newGroupeIntervenant = new GroupeIntervenant();
         newGroupeIntervenant.setId(dto.getId());
         newGroupeIntervenant.setDateAffectation(dto.getDateAffectation());
+        newGroupeIntervenant.setCommentaire(dto.getCommentaire());
         newGroupeIntervenant.setDateFinTravaux(dto.getDateFinTravaux());
-         newGroupeIntervenant.setSignalerPanne(SignalerPanneDto.toEntity(dto.getSignalerPanneDto()));
+        newGroupeIntervenant.setSignalerPanne(SignalerPanneDto.toEntity(dto.getSignalerPanneDto()));
         return newGroupeIntervenant;
     }
     public static GroupeIntervenantDto fromEntity(GroupeIntervenant groupeIntervenant) {

@@ -27,6 +27,11 @@ public class CorrectiveController {
         return correctiveService.getCorrectiveById(IdCorrective);
     }
 
+    @GetMapping(value=APP_ROOT+"/intervention/correctivebygrpeinterv/all/{IdCorrective}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CorrectiveDto> getAllCorrectiveByGrpeInterv(@PathVariable("IdCorrective") Long IdCorrective){
+        return correctiveService.listOfCorrectivesByIdGroupeIntervention(IdCorrective);
+    }
+
     @PostMapping(value =APP_ROOT+"/intervention/corrective/savecorrective",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,7 +42,7 @@ public class CorrectiveController {
 
     @DeleteMapping(value = APP_ROOT+"/intervention/corrective/delete/{IdCorrective}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public boolean deleteBienById(@PathVariable("IdCorrective") Long IdCorrective) {
+    public boolean deleteCorrectiveById(@PathVariable("IdCorrective") Long IdCorrective) {
         return correctiveService.deleteCorrective(IdCorrective);
     }
 

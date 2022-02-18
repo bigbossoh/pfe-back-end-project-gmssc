@@ -15,5 +15,7 @@ public interface PieceEquipementService {
 
     List<PieceEquipementDto> listOfPieceEquipementByEquipementDtos(Long IdEquipement);
 
+    List<PieceEquipementDto> listOfPieceEquipementByPiecesDtos(Long IdPiece);
+
     boolean deletePieceEquipement(Long id);
 }

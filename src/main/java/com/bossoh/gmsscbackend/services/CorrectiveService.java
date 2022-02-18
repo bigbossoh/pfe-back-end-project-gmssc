@@ -12,4 +12,6 @@ public interface CorrectiveService {
     boolean deleteCorrective(Long idDto);
 
     List<CorrectiveDto> listOfCorrectives();
+
+    List<CorrectiveDto> listOfCorrectivesByIdGroupeIntervention( Long IdGroupeInter);
 }

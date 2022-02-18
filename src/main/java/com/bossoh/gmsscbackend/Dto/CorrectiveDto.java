@@ -1,12 +1,9 @@
 package com.bossoh.gmsscbackend.Dto;
 
-import com.bossoh.gmsscbackend.entities.BienImmobilier;
+
 import com.bossoh.gmsscbackend.entities.Corrective;
-import com.bossoh.gmsscbackend.entities.GroupeIntervenant;
 import lombok.Builder;
 import lombok.Data;
-
-import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Data
@@ -16,6 +13,7 @@ public class CorrectiveDto {
     private String actionsMener;
     private Boolean reparation;
     private Boolean depannage;
+    private String typeTravaux;
     private double coutMaintenance;
     private LocalDate dateDebutIntervention;
     private LocalDate dateFinIntervention;
@@ -30,6 +28,7 @@ public class CorrectiveDto {
         newCorrective.setId(dto.getId());
         newCorrective.setActionsMener(dto.getActionsMener());
         newCorrective.setReparation(dto.getReparation());
+        newCorrective.setTypeTravaux(dto.getTypeTravaux());
         newCorrective.setDepannage(dto.getDepannage());
         newCorrective.setCoutMaintenance(dto.getCoutMaintenance());
         newCorrective.setDateDebutIntervention(dto.getDateDebutIntervention());
@@ -47,6 +46,7 @@ public class CorrectiveDto {
                 .id(corrective.getId())
                 .actionsMener(corrective.getActionsMener())
                 .reparation(corrective.getReparation())
+                .typeTravaux(corrective.getTypeTravaux())
                 .depannage(corrective.getDepannage())
                 .coutMaintenance(corrective.getCoutMaintenance())
                 .dateDebutIntervention(corrective.getDateDebutIntervention())

@@ -12,4 +12,6 @@ public interface GroupeIntervenantService {
     boolean deleteGroupeIntervenant(Long idDto);
 
     List<GroupeIntervenantDto> listOfGroupeIntervenant();
+
+
 }
