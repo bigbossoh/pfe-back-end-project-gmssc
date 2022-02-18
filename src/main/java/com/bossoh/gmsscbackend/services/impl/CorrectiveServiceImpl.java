@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -84,4 +85,17 @@ public class CorrectiveServiceImpl  implements CorrectiveService {
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    public List<CorrectiveDto> listOfCorrectivesByIdGroupeIntervention(Long IdGroupeInter) {
+        log.info("We are going to take back all Correctives by IdGroupeIntervention {}" ,
+                IdGroupeInter);
+
+        return correctiveRepository.findAll().stream()
+                .filter(e -> Objects.equals(e.getGroupeIntervenant().getId(), IdGroupeInter))
+                .map(CorrectiveDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+
 }

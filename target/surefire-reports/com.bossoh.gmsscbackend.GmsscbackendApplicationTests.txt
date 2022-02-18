@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.bossoh.gmsscbackend.GmsscbackendApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.444 s - in com.bossoh.gmsscbackend.GmsscbackendApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.338 s - in com.bossoh.gmsscbackend.GmsscbackendApplicationTests

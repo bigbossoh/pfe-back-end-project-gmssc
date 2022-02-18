@@ -12,6 +12,7 @@ public class PreventiveDto {
     private Boolean programmer;
     private LocalDate dateProgramation;
     private Boolean isDone;
+    private String typeTravaux;
     private Boolean periodique;
     private LocalDate dateDebutIntervention;
     private LocalDate dateFinIntervention;
@@ -25,6 +26,7 @@ public class PreventiveDto {
         Preventive newPreventive=new Preventive();
         newPreventive.setId(dto.getId());
         newPreventive.setProgrammer(dto.getProgrammer());
+        newPreventive.setTypeTravaux(dto.getTypeTravaux());
         newPreventive.setDateProgramation(dto.getDateProgramation());
         newPreventive.setIsDone(dto.getIsDone());
         newPreventive.setPeriodique(dto.getPeriodique());
@@ -42,6 +44,7 @@ public class PreventiveDto {
         return  PreventiveDto.builder()
                 .id(preventive.getId())
                 .programmer(preventive.getProgrammer())
+                .typeTravaux(preventive.getTypeTravaux())
                 .dateProgramation(preventive.getDateProgramation())
                 .isDone(preventive.getIsDone())
                 .periodique(preventive.getPeriodique())

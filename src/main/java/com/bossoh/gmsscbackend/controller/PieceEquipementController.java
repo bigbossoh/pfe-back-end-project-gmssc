@@ -30,6 +30,10 @@ public class PieceEquipementController {
     public List<PieceEquipementDto> listOfPiecEqpmtByEqpmntID(@PathVariable("IdEquipement") Long IdEquipement){
         return pieceEquipementService.listOfPieceEquipementByEquipementDtos(IdEquipement);
     }
+    @GetMapping(value=APP_ROOT+"/PieceEquipements/allbypieceequiment/{IdPiece}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PieceEquipementDto> listOfPiecEqpmtByPiece(@PathVariable("IdPiece") Long IdPiece){
+        return pieceEquipementService.listOfPieceEquipementByPiecesDtos(IdPiece);
+    }
 
     @GetMapping(value=APP_ROOT+"/PieceEquipements/{IdPieceEqpt}",produces = MediaType.APPLICATION_JSON_VALUE)
     public PieceEquipementDto getPieceEquipementByID(@PathVariable("IdPieceEqpt") Long IdPieceEqpt) {

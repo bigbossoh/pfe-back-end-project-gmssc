@@ -11,6 +11,8 @@
   },
   "basePath" : "http://localhost:8183",
   "tags" : [ {
+    "name" : "gmsscapiv1actions"
+  }, {
     "name" : "gmsscapiv1auth"
   }, {
     "name" : "gmsscapiv1biens"
@@ -67,6 +69,31 @@
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "IdEquipement",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/PieceEquipementDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/PieceEquipements/allbypieceequiment/{IdPiece}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1PieceEquipements" ],
+        "operationId" : "listOfPiecEqpmtByPiece",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdPiece",
           "in" : "path",
           "required" : true,
           "type" : "integer",
@@ -170,6 +197,110 @@
             "description" : "successful operation",
             "schema" : {
               "type" : "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/actions/all" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1actions" ],
+        "operationId" : "getAllActions",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/TodoMaintenanceDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/actions/allOrdered" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1actions" ],
+        "operationId" : "getAllActionsOrdered",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/TodoMaintenanceDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/actions/delete/{Idaction}" : {
+      "delete" : {
+        "tags" : [ "gmsscapiv1actions" ],
+        "operationId" : "deleteActiobById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Idaction",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/actions/saveaction" : {
+      "post" : {
+        "tags" : [ "gmsscapiv1actions" ],
+        "operationId" : "saveAction",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/TodoMaintenanceDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/TodoMaintenanceDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/actions/{Idaction}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1actions" ],
+        "operationId" : "getActionByID",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "Idaction",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/TodoMaintenanceDto"
             }
           }
         }
@@ -880,7 +1011,7 @@
     "/gmssc/api/v1/intervention/corrective/delete/{IdCorrective}" : {
       "delete" : {
         "tags" : [ "gmsscapiv1interventioncorrective" ],
-        "operationId" : "deleteBienById",
+        "operationId" : "deleteCorrectiveById",
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "IdCorrective",
@@ -940,6 +1071,31 @@
             "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/CorrectiveDto"
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/intervention/correctivebygrpeinterv/all/{IdCorrective}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1interventioncorrective" ],
+        "operationId" : "getAllCorrectiveByGrpeInterv",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IdCorrective",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/CorrectiveDto"
+              }
             }
           }
         }
@@ -1421,7 +1577,32 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/UtilisateurGroupeIntervenantDto"
+                "$ref" : "#/definitions/IntervenantGroupeIntervenantDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gmssc/api/v1/utilisateurGroupeIntervenant/allparGroupeIntervenant/{IduserGrpeInterv}" : {
+      "get" : {
+        "tags" : [ "gmsscapiv1utilisateurGroupeIntervenant" ],
+        "operationId" : "getlistOfUtilisateurGroupeIntervenantByGroupeIntervenant",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "IduserGrpeInterv",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/IntervenantGroupeIntervenantDto"
               }
             }
           }
@@ -1439,14 +1620,14 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/UtilisateurGroupeIntervenantDto"
+            "$ref" : "#/definitions/IntervenantGroupeIntervenantDto"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/UtilisateurGroupeIntervenantDto"
+              "$ref" : "#/definitions/IntervenantGroupeIntervenantDto"
             }
           }
         }
@@ -1468,7 +1649,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/UtilisateurGroupeIntervenantDto"
+              "$ref" : "#/definitions/IntervenantGroupeIntervenantDto"
             }
           }
         }
@@ -1670,10 +1851,10 @@
         "societeDto" : {
           "$ref" : "#/definitions/SocieteDto"
         },
-        "adresses2" : {
+        "adresses1" : {
           "type" : "string"
         },
-        "adresses1" : {
+        "adresses2" : {
           "type" : "string"
         }
       }
@@ -1813,6 +1994,9 @@
         },
         "depannage" : {
           "type" : "boolean"
+        },
+        "typeTravaux" : {
+          "type" : "string"
         },
         "coutMaintenance" : {
           "type" : "number",
@@ -1985,6 +2169,25 @@
         }
       }
     },
+    "IntervenantGroupeIntervenantDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "dateAffectionUser" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "groupeIntervenantDto" : {
+          "$ref" : "#/definitions/GroupeIntervenantDto"
+        },
+        "intervenantDto" : {
+          "$ref" : "#/definitions/IntervenantDto"
+        }
+      }
+    },
     "PieceEquipementDto" : {
       "type" : "object",
       "properties" : {
@@ -2055,6 +2258,9 @@
         },
         "isDone" : {
           "type" : "boolean"
+        },
+        "typeTravaux" : {
+          "type" : "string"
         },
         "periodique" : {
           "type" : "boolean"
@@ -2193,6 +2399,42 @@
         }
       }
     },
+    "TodoMaintenanceDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "titre" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "quantite" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "unite" : {
+          "type" : "string"
+        },
+        "dateDoto" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "lieuGeographique" : {
+          "type" : "string"
+        },
+        "coutMaintenance" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "correctiveDto" : {
+          "$ref" : "#/definitions/CorrectiveDto"
+        }
+      }
+    },
     "UtilisateurDto" : {
       "type" : "object",
       "properties" : {
@@ -2230,25 +2472,6 @@
           "items" : {
             "$ref" : "#/definitions/RolesDto"
           }
-        }
-      }
-    },
-    "UtilisateurGroupeIntervenantDto" : {
-      "type" : "object",
-      "properties" : {
-        "id" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "dateAffectionUser" : {
-          "type" : "string",
-          "format" : "date"
-        },
-        "groupeIntervenantDto" : {
-          "$ref" : "#/definitions/GroupeIntervenantDto"
-        },
-        "utilisateurDto" : {
-          "$ref" : "#/definitions/UtilisateurDto"
         }
       }
     }

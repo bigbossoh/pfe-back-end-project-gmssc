@@ -23,6 +23,7 @@ public abstract class Intervention extends AbstractEntity {
     private LocalDate dateFinIntervention;
     private Boolean resolu;
     private Boolean rapportInterv;
+    private String typeTravaux;
     @ManyToOne
     private GroupeIntervenant groupeIntervenant;
 
