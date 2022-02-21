@@ -16,9 +16,9 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("signup")
-    public ResponseEntity signup(@RequestBody RegisterRequest registerRequest){
+    public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest){
         authService.signup(registerRequest);
-        return new ResponseEntity(OK);
+        return new ResponseEntity<>("L'utilisateur a été enregistré avec succès",OK);
     }
     @GetMapping("accountVerification/{token}")
     public ResponseEntity<String> verifyAccount(@PathVariable String token){
